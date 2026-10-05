@@ -22,11 +22,13 @@
     "services:up": "docker compose -f infra/docker-compose.yml up -d",
     "services:down": "docker compose -f infra/docker-compose.yml down",
     "env:local": "node scripts/env-local.mjs",
-    "demo:capture": "tsx scripts/capture-demo.ts"
+    "demo:capture": "tsx scripts/capture-demo.ts",
+    "demo:validate": "tsx scripts/validate-demo.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
     "@byb/config": "workspace:*",
+    "@byb/core": "workspace:*",
     "@byb/schemas": "workspace:*",
     "@byb/ui": "workspace:*",
     "@playwright/test": "1.63.0",

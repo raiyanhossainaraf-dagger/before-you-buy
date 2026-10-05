@@ -6,10 +6,8 @@
  * M0.3: there are no provider accounts locally (no eBay/Best Buy keys, no
  * BrightData) and rule 2 forbids fetching a user-supplied URL, so a real
  * capture is recorded by hand from the retailer sites and fed through this
- * validator rather than scraped. Until that happens, the three files under
- * content/demo/ are marked `_sample: true` — invented but clearly labelled —
- * and docs/reports/gate-0.md lists replacing them as a prerequisite to
- * running the actual Gate 0 test.
+ * validator rather than scraped. Run `pnpm demo:validate` after writing to
+ * catch leftover TODOs and landed-cost arithmetic errors.
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
@@ -34,5 +32,5 @@ const outDir = join(import.meta.dirname, '..', 'apps', 'web', 'content', 'demo')
 const outPath = join(outDir, `${parsed.data.slug}.json`);
 await writeFile(outPath, JSON.stringify(parsed.data, null, 2) + '\n', 'utf8');
 
-console.log(`Wrote ${outPath} (sample: ${parsed.data._sample})`);
+console.log(`Wrote ${outPath} (captured by ${parsed.data.capturedBy})`);
 console.log(`Input: ${basename(inputPath)}`);

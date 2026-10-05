@@ -1,0 +1,162 @@
+{
+  "slug": "sony-wh-1000xm5",
+  "capturedAt": "TODO",
+  "capturedBy": "TODO",
+  "product": {
+    "name": "Sony WH-1000XM5 Wireless Headphones (Black)",
+    "brand": "Sony",
+    "category": "headphones"
+  },
+  "zip": "10001",
+  "listings": [
+    {
+      "listingId": "sony-wh1000xm5-amazon",
+      "platform": "amazon",
+      "title": "TODO",
+      "condition": "new",
+      "seller": { "name": "TODO", "isRetailer": true },
+      "warranty": { "months": "TODO", "provider": "manufacturer" },
+      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "inStock": true,
+      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
+      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
+      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
+      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
+      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "landedPriceComplete": true,
+      "uncertainComponents": [],
+      "priceVerification": { "status": "not_required" },
+      "reviewAuthenticity": {
+        "score": 78,
+        "band": "consistent",
+        "signals": [
+          {
+            "code": "VERIFIED_SHARE",
+            "label": "Most reviews are from verified purchases",
+            "effect": "raises",
+            "weight": 8
+          }
+        ],
+        "reviewCount": 41230,
+        "averageRating": 4.7,
+        "analyzedAt": "TODO",
+        "modelVersion": "trust-v1-example",
+        "illustrative": true
+      },
+      "checkedAt": "TODO",
+      "affiliate": { "isAffiliate": false }
+    },
+    {
+      "listingId": "sony-wh1000xm5-ebay",
+      "platform": "ebay",
+      "title": "TODO",
+      "condition": "new",
+      "seller": { "name": "TODO", "isRetailer": "TODO" },
+      "warranty": { "months": "TODO", "provider": "seller" },
+      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "inStock": true,
+      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
+      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
+      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
+      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
+      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "landedPriceComplete": true,
+      "uncertainComponents": [],
+      "priceVerification": { "status": "not_required" },
+      "reviewAuthenticity": {
+        "score": 64,
+        "band": "some_concerns",
+        "signals": [
+          {
+            "code": "SELLER_PROFILE",
+            "label": "Seller feedback score is slightly below category norm",
+            "effect": "lowers",
+            "weight": -6
+          }
+        ],
+        "reviewCount": 980,
+        "averageRating": 4.5,
+        "analyzedAt": "TODO",
+        "modelVersion": "trust-v1-example",
+        "illustrative": true
+      },
+      "checkedAt": "TODO",
+      "attribution": { "text": "From eBay", "logo": "ebay" },
+      "affiliate": { "isAffiliate": false }
+    },
+    {
+      "listingId": "sony-wh1000xm5-bestbuy",
+      "platform": "bestbuy",
+      "title": "TODO",
+      "condition": "new",
+      "seller": { "name": "Best Buy", "isRetailer": true },
+      "warranty": { "months": "TODO", "provider": "manufacturer" },
+      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "inStock": true,
+      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
+      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
+      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
+      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
+      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "landedPriceComplete": true,
+      "uncertainComponents": [],
+      "priceVerification": { "status": "not_required" },
+      "reviewAuthenticity": {
+        "score": 74,
+        "band": "consistent",
+        "signals": [
+          {
+            "code": "RATING_SHAPE",
+            "label": "Rating distribution matches category norm",
+            "effect": "neutral",
+            "weight": 0
+          }
+        ],
+        "reviewCount": 5120,
+        "averageRating": 4.6,
+        "analyzedAt": "TODO",
+        "modelVersion": "trust-v1-example",
+        "illustrative": true
+      },
+      "checkedAt": "TODO",
+      "attribution": { "text": "From Best Buy", "logo": "bestbuy" },
+      "affiliate": { "isAffiliate": false }
+    }
+  ],
+  "ranking": {
+    "conditionScope": "new",
+    "top": [
+      {
+        "listingId": "sony-wh1000xm5-amazon",
+        "rank": 1,
+        "label": "Lowest delivered price",
+        "reasons": [{ "code": "TODO", "text": "TODO" }]
+      },
+      {
+        "listingId": "sony-wh1000xm5-bestbuy",
+        "rank": 2,
+        "label": "Best returns",
+        "reasons": [{ "code": "TODO", "text": "TODO" }]
+      },
+      {
+        "listingId": "sony-wh1000xm5-ebay",
+        "rank": 3,
+        "label": "Other option we checked",
+        "reasons": [{ "code": "TODO", "text": "TODO" }]
+      }
+    ],
+    "excluded": []
+  },
+  "history": {
+    "basis": "listed_new",
+    "platforms": ["amazon", "ebay", "bestbuy"],
+    "minCents": 27999,
+    "maxCents": 39999,
+    "medianCents": 32999,
+    "currentCents": 32841,
+    "currentPercentile": 35,
+    "daysWithData": 90,
+    "insufficientData": false,
+    "illustrative": true
+  }
+}

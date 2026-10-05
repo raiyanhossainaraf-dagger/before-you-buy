@@ -35,9 +35,20 @@ Plan file: `C:\Users\ARAF\.claude\plans\vast-floating-lollipop.md` (full task br
 - Manually checked 768px and 1024px via screenshot (grids collapse from 3 → fits each breakpoint per UI §6); not part of the automated suite since the task only asked for axe at 375/1440.
 - `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e` all pass.
 
+**M0.3 — Live demo on three real products.** Local-only; not yet committed as the Gate 0 "live" test (that still needs real retailer data — see below).
+
+- `packages/core` (new package): `landed-cost.ts` (`computeLandedCost`, `roundHalfUp` — TR-LC-01/05/06, reused by M8), `demo-validate.ts` (`findTodoPaths`, `checkLandedCostArithmetic`), `relative-time.ts` (`formatCheckedAgo` — "Checked 3 minutes ago"), `history-label.ts` (`historyLabel` — TR-HIST-03 copy). All pure, all unit-tested (22 tests).
+- `packages/schemas/src/demo.ts`: `demoComparisonSchema` now reuses `resultListingSchema`/`reviewAuthenticitySchema`/`priceHistory90dSchema` as-is and adds `capturedBy` plus a per-block `illustrative: boolean` on each listing's `reviewAuthenticity` and on the top-level `history` — replacing the earlier whole-document `_sample` flag with the finer-grained shape the task asked for.
+- `scripts/validate-demo.ts` (`pnpm demo:validate`): fails on any leftover `"TODO"` string, any schema error, or a `landedPrice` that doesn't match `listedPrice + shippingCost + estimatedTax`.
+- Three templates in `apps/web/content/demo/`: `sony-wh-1000xm5.json`, `robot-vacuum.json` (exact model still TODO — your call), `ipad-base.json` (includes a 4th "Renewed" listing wired through `ranking.cheaperAlternative`, not through the top-3). All three currently fail `pnpm demo:validate` on purpose — see the checklist given in chat for exactly which fields to fill from real retailer checkouts.
+- `packages/ui`: real components per UI §7.3–7.6 — `ResultCard`, `LandedPrice`, `TrustBadge` (+ signals sheet via a `Sheet` wrapper over Base UI `Dialog`), `HistoryIndicator`, `ReasonList`. No retailer images (LEGAL-16: a neutral placeholder box); outbound CTA is automatically the disabled "Links available at launch" button whenever `listing.outboundUrl` is absent (true for every M0.3 demo listing, since `/go/` tokens don't exist until M16) and becomes a real link once `outboundUrl` is set.
+- `apps/web/app/_components/landing/demo-picker.tsx`: client-side tab picker; `DemoSlot` (in `slots.tsx`) loads the 3 real JSON files, keeps only the ones that pass `demoComparisonSchema` (so a file still full of TODOs falls back to the old "coming soon" placeholder instead of breaking the build), and renders `DemoPicker` with whatever validates.
+- `apps/web/app/dev/demo-preview/` + `apps/web/content/demo/__fixtures__/comparisons.ts`: an unlinked, noindexed dev harness rendering the picker against fully-valid fixture data, since the real content files intentionally don't validate yet. `e2e/demo.spec.ts` runs against this route (3 tabs × 3 cards, condition/landed-price/"Example analysis" visible, disabled CTAs, axe at 375px). **ponytail debt:** no `flags.isOn()` gate (that's M1.3) — delete this route once M11's real results page gives the same proof.
+- `pnpm lint && pnpm typecheck && pnpm test` pass (49 unit tests, 22 of them new in `packages/core`); `pnpm --filter @byb/web build && pnpm test:e2e` pass (11 e2e tests) — **but only with `--workers=1`**. Multi-worker Playwright runs in this sandbox intermittently crash the browser mid-suite (`Target page, context or browser has been closed`) on `e2e/landing.spec.ts`, unrelated to this change (confirmed by running that file alone, repeatedly, across worker counts) — likely this Windows sandbox's resource limits, not a real bug. Flag this if CI shows the same flakiness.
+
 ## Not started
 
-M0.3 (demo cards) through M0.9 (test kit) — see the plan file for the full breakdown, the font/demo-data/M0.9 decisions already made with the user, and the verification table. M0.8 (deploy) stays deferred per the original scope.
+M0.4 (waitlist) through M0.9 (test kit) — see the plan file for the full breakdown, the font/demo-data/M0.9 decisions already made with the user, and the verification table. M0.8 (deploy) stays deferred per the original scope.
 
 Nothing under `packages/db/migrations/` exists yet — no migration has been generated or run.
 
@@ -61,4 +72,4 @@ pnpm --filter @byb/web build && pnpm test:e2e   # e2e needs a production build f
 
 ## Next step
 
-M0.3 — Live demo on three real products: a one-off capture script (`pnpm demo:capture`, already scaffolded) stores precomputed comparison JSON in `apps/web/content/demo/`; render it with real result-card components in the `demo-m0-3` slot. No affiliate links in the demo. Per the user's standing instruction, do not start this until told to.
+M0.3's code is done; what's left is filling in `apps/web/content/demo/*.json` with real hand-captured retailer data (see the checklist given in chat), then `pnpm demo:validate` until it's clean, then M0.4 (waitlist). Per the user's standing instruction, do not start new M0 tasks until told to.

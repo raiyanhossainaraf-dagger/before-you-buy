@@ -1,0 +1,162 @@
+{
+  "slug": "robot-vacuum",
+  "capturedAt": "TODO",
+  "capturedBy": "TODO",
+  "product": {
+    "name": "TODO",
+    "brand": "TODO",
+    "category": "robot vacuums"
+  },
+  "zip": "10001",
+  "listings": [
+    {
+      "listingId": "robot-vacuum-amazon",
+      "platform": "amazon",
+      "title": "TODO",
+      "condition": "new",
+      "seller": { "name": "TODO", "isRetailer": true },
+      "warranty": { "months": "TODO", "provider": "manufacturer" },
+      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "inStock": true,
+      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
+      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
+      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
+      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
+      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "landedPriceComplete": true,
+      "uncertainComponents": [],
+      "priceVerification": { "status": "not_required" },
+      "reviewAuthenticity": {
+        "score": 70,
+        "band": "consistent",
+        "signals": [
+          {
+            "code": "VERIFIED_SHARE",
+            "label": "Most reviews are from verified purchases",
+            "effect": "raises",
+            "weight": 6
+          }
+        ],
+        "reviewCount": 18400,
+        "averageRating": 4.4,
+        "analyzedAt": "TODO",
+        "modelVersion": "trust-v1-example",
+        "illustrative": true
+      },
+      "checkedAt": "TODO",
+      "affiliate": { "isAffiliate": false }
+    },
+    {
+      "listingId": "robot-vacuum-ebay",
+      "platform": "ebay",
+      "title": "TODO",
+      "condition": "new",
+      "seller": { "name": "TODO", "isRetailer": "TODO" },
+      "warranty": { "months": "TODO", "provider": "seller" },
+      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "inStock": true,
+      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
+      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
+      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
+      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
+      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "landedPriceComplete": true,
+      "uncertainComponents": [],
+      "priceVerification": { "status": "not_required" },
+      "reviewAuthenticity": {
+        "score": 58,
+        "band": "some_concerns",
+        "signals": [
+          {
+            "code": "VELOCITY_BURST",
+            "label": "A burst of reviews arrived shortly after listing",
+            "effect": "lowers",
+            "weight": -10
+          }
+        ],
+        "reviewCount": 340,
+        "averageRating": 4.3,
+        "analyzedAt": "TODO",
+        "modelVersion": "trust-v1-example",
+        "illustrative": true
+      },
+      "checkedAt": "TODO",
+      "attribution": { "text": "From eBay", "logo": "ebay" },
+      "affiliate": { "isAffiliate": false }
+    },
+    {
+      "listingId": "robot-vacuum-bestbuy",
+      "platform": "bestbuy",
+      "title": "TODO",
+      "condition": "new",
+      "seller": { "name": "Best Buy", "isRetailer": true },
+      "warranty": { "months": "TODO", "provider": "manufacturer" },
+      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "inStock": true,
+      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
+      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
+      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
+      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
+      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "landedPriceComplete": true,
+      "uncertainComponents": [],
+      "priceVerification": { "status": "not_required" },
+      "reviewAuthenticity": {
+        "score": 72,
+        "band": "consistent",
+        "signals": [
+          {
+            "code": "RATING_SHAPE",
+            "label": "Rating distribution matches category norm",
+            "effect": "neutral",
+            "weight": 0
+          }
+        ],
+        "reviewCount": 2210,
+        "averageRating": 4.5,
+        "analyzedAt": "TODO",
+        "modelVersion": "trust-v1-example",
+        "illustrative": true
+      },
+      "checkedAt": "TODO",
+      "attribution": { "text": "From Best Buy", "logo": "bestbuy" },
+      "affiliate": { "isAffiliate": false }
+    }
+  ],
+  "ranking": {
+    "conditionScope": "new",
+    "top": [
+      {
+        "listingId": "robot-vacuum-amazon",
+        "rank": 1,
+        "label": "Lowest delivered price",
+        "reasons": [{ "code": "TODO", "text": "TODO" }]
+      },
+      {
+        "listingId": "robot-vacuum-bestbuy",
+        "rank": 2,
+        "label": "Best returns",
+        "reasons": [{ "code": "TODO", "text": "TODO" }]
+      },
+      {
+        "listingId": "robot-vacuum-ebay",
+        "rank": 3,
+        "label": "Other option we checked",
+        "reasons": [{ "code": "TODO", "text": "TODO" }]
+      }
+    ],
+    "excluded": []
+  },
+  "history": {
+    "basis": "listed_new",
+    "platforms": ["amazon", "ebay", "bestbuy"],
+    "minCents": 24999,
+    "maxCents": 44999,
+    "medianCents": 32999,
+    "currentCents": 29999,
+    "currentPercentile": 20,
+    "daysWithData": 90,
+    "insufficientData": false,
+    "illustrative": true
+  }
+}

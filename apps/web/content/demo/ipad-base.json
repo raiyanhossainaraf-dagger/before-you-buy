@@ -1,0 +1,205 @@
+{
+  "slug": "ipad-base",
+  "capturedAt": "TODO",
+  "capturedBy": "TODO",
+  "product": {
+    "name": "Apple iPad 128GB Wi-Fi (current base model)",
+    "brand": "Apple",
+    "category": "tablets"
+  },
+  "zip": "10001",
+  "listings": [
+    {
+      "listingId": "ipad-base-amazon",
+      "platform": "amazon",
+      "title": "TODO",
+      "condition": "new",
+      "seller": { "name": "TODO", "isRetailer": true },
+      "warranty": { "months": "TODO", "provider": "manufacturer" },
+      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "inStock": true,
+      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
+      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
+      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
+      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
+      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "landedPriceComplete": true,
+      "uncertainComponents": [],
+      "priceVerification": { "status": "not_required" },
+      "reviewAuthenticity": {
+        "score": 82,
+        "band": "consistent",
+        "signals": [
+          {
+            "code": "VERIFIED_SHARE",
+            "label": "Most reviews are from verified purchases",
+            "effect": "raises",
+            "weight": 9
+          }
+        ],
+        "reviewCount": 62340,
+        "averageRating": 4.8,
+        "analyzedAt": "TODO",
+        "modelVersion": "trust-v1-example",
+        "illustrative": true
+      },
+      "checkedAt": "TODO",
+      "affiliate": { "isAffiliate": false }
+    },
+    {
+      "listingId": "ipad-base-ebay",
+      "platform": "ebay",
+      "title": "TODO",
+      "condition": "new",
+      "seller": { "name": "TODO", "isRetailer": "TODO" },
+      "warranty": { "months": "TODO", "provider": "seller" },
+      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "inStock": true,
+      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
+      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
+      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
+      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
+      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "landedPriceComplete": true,
+      "uncertainComponents": [],
+      "priceVerification": { "status": "not_required" },
+      "reviewAuthenticity": {
+        "score": 60,
+        "band": "some_concerns",
+        "signals": [
+          {
+            "code": "SELLER_PROFILE",
+            "label": "Seller feedback score is slightly below category norm",
+            "effect": "lowers",
+            "weight": -5
+          }
+        ],
+        "reviewCount": 410,
+        "averageRating": 4.6,
+        "analyzedAt": "TODO",
+        "modelVersion": "trust-v1-example",
+        "illustrative": true
+      },
+      "checkedAt": "TODO",
+      "attribution": { "text": "From eBay", "logo": "ebay" },
+      "affiliate": { "isAffiliate": false }
+    },
+    {
+      "listingId": "ipad-base-bestbuy",
+      "platform": "bestbuy",
+      "title": "TODO",
+      "condition": "new",
+      "seller": { "name": "Best Buy", "isRetailer": true },
+      "warranty": { "months": "TODO", "provider": "manufacturer" },
+      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "inStock": true,
+      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
+      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
+      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
+      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
+      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "landedPriceComplete": true,
+      "uncertainComponents": [],
+      "priceVerification": { "status": "not_required" },
+      "reviewAuthenticity": {
+        "score": 76,
+        "band": "consistent",
+        "signals": [
+          {
+            "code": "RATING_SHAPE",
+            "label": "Rating distribution matches category norm",
+            "effect": "neutral",
+            "weight": 0
+          }
+        ],
+        "reviewCount": 4890,
+        "averageRating": 4.7,
+        "analyzedAt": "TODO",
+        "modelVersion": "trust-v1-example",
+        "illustrative": true
+      },
+      "checkedAt": "TODO",
+      "attribution": { "text": "From Best Buy", "logo": "bestbuy" },
+      "affiliate": { "isAffiliate": false }
+    },
+    {
+      "listingId": "ipad-base-amazon-renewed",
+      "platform": "amazon",
+      "title": "TODO",
+      "condition": "refurbished",
+      "conditionDetail": "Renewed",
+      "seller": { "name": "TODO", "isRetailer": "TODO" },
+      "warranty": { "months": "TODO", "provider": "seller" },
+      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "inStock": true,
+      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
+      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
+      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
+      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
+      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "landedPriceComplete": true,
+      "uncertainComponents": [],
+      "priceVerification": { "status": "not_required" },
+      "reviewAuthenticity": {
+        "score": 68,
+        "band": "some_concerns",
+        "signals": [
+          {
+            "code": "TEXT_DUPLICATION",
+            "label": "Several reviews use near-identical wording",
+            "effect": "lowers",
+            "weight": -8
+          }
+        ],
+        "reviewCount": 1230,
+        "averageRating": 4.3,
+        "analyzedAt": "TODO",
+        "modelVersion": "trust-v1-example",
+        "illustrative": true
+      },
+      "checkedAt": "TODO",
+      "affiliate": { "isAffiliate": false }
+    }
+  ],
+  "ranking": {
+    "conditionScope": "new",
+    "top": [
+      {
+        "listingId": "ipad-base-amazon",
+        "rank": 1,
+        "label": "Lowest delivered price",
+        "reasons": [{ "code": "TODO", "text": "TODO" }]
+      },
+      {
+        "listingId": "ipad-base-bestbuy",
+        "rank": 2,
+        "label": "Best returns",
+        "reasons": [{ "code": "TODO", "text": "TODO" }]
+      },
+      {
+        "listingId": "ipad-base-ebay",
+        "rank": 3,
+        "label": "Other option we checked",
+        "reasons": [{ "code": "TODO", "text": "TODO" }]
+      }
+    ],
+    "cheaperAlternative": {
+      "listingId": "ipad-base-amazon-renewed",
+      "savingCents": "TODO",
+      "reasons": [{ "code": "TODO", "text": "TODO" }]
+    },
+    "excluded": []
+  },
+  "history": {
+    "basis": "listed_new",
+    "platforms": ["amazon", "ebay", "bestbuy"],
+    "minCents": 34900,
+    "maxCents": 39900,
+    "medianCents": 34900,
+    "currentCents": 34900,
+    "currentPercentile": 10,
+    "daysWithData": 90,
+    "insufficientData": false,
+    "illustrative": true
+  }
+}
