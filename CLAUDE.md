@@ -82,6 +82,13 @@ pnpm search:debug "<query>"                   # dev: print provider candidates
 5. Run lint, typecheck and tests before committing. Commit as `<type>(<scope>): <summary> (M<n>.<k>)` (Conventional Commits).
 6. Tick the task, update the status board, and note deviations.
 
+## Plugins
+
+- **Source of truth is `docs/06-IMPLEMENTATION-PLAN.md`.** Don't run `brainstorming` on tasks already specified there. If `writing-plans` is used, base the plan on the current task and save it to `docs/plans/`.
+- **Always:** `test-driven-development`, `verification-before-completion`, and `systematic-debugging` for any failure. Run `ponytail-review` on the diff at the end of each task. Run `security-review` at the end of each milestone.
+- **Ponytail = simplest working solution**, but the "Non-negotiable rules" above and these M0 seams are required, not over-engineering: `PaymentProvider` (mock/stripe), email adapter (smtp/resend), analytics adapter, provider policy blocks, idempotency keys, org scoping/RLS, strict Zod schemas. Mark any shortcut with a `ponytail:` comment so `ponytail-debt` picks it up.
+- **Don't use** `subagent-driven-development`, `dispatching-parallel-agents`, or git worktrees unless asked — they burn usage.
+
 ## Ask instead of guessing when
 
 - A change would alter a PRD requirement, pricing, credits or quotas.
