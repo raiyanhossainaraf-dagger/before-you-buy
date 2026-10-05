@@ -1,0 +1,30 @@
+{
+  "name": "@byb/email",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./templates/*": "./src/templates/*.tsx"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@byb/config": "workspace:*",
+    "@react-email/render": "2.1.0",
+    "nodemailer": "10.0.13",
+    "resend": "6.32.0"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "8.0.2",
+    "@types/react": "19.3.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

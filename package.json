@@ -1,0 +1,43 @@
+{
+  "name": "before-you-buy",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.6",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "eslint .",
+    "typecheck": "turbo run typecheck",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "db:generate": "pnpm --filter @byb/db run generate",
+    "db:migrate": "pnpm --filter @byb/db run migrate",
+    "db:seed": "pnpm --filter @byb/db run seed",
+    "db:studio": "pnpm --filter @byb/db run studio",
+    "services:up": "docker compose -f infra/docker-compose.yml up -d",
+    "services:down": "docker compose -f infra/docker-compose.yml down",
+    "env:local": "node scripts/env-local.mjs",
+    "demo:capture": "tsx scripts/capture-demo.ts"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@byb/schemas": "workspace:*",
+    "@playwright/test": "1.63.0",
+    "@types/node": "26.6.4",
+    "dotenv": "18.0.5",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.8",
+    "eslint-plugin-react": "7.37.5",
+    "prettier": "3.9.9",
+    "tsx": "4.23.15",
+    "turbo": "2.11.6",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.0",
+    "vitest": "5.0.3"
+  }
+}

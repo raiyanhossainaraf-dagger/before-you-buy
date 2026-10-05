@@ -1,0 +1,46 @@
+name: before-you-buy
+
+services:
+  postgres:
+    # PostgreSQL 18 with pgvector, so uuidv7() and the extensions M2 needs are
+    # the same locally as on Neon.
+    image: pgvector/pgvector:pg18
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: byb
+      POSTGRES_PASSWORD: byb
+      POSTGRES_DB: byb
+    ports:
+      - '5432:5432'
+    volumes:
+      - byb_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U byb -d byb']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - byb_redis:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Local email capture. Nothing leaves the machine in M0.
+  mailpit:
+    image: axllent/mailpit
+    restart: unless-stopped
+    ports:
+      - '1025:1025' # SMTP
+      - '8025:8025' # web UI and API
+
+volumes:
+  byb_pg:
+  byb_redis:

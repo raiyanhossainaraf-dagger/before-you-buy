@@ -1,0 +1,129 @@
+/**
+ * Design tokens — 07-UI-UX-DESIGN §5.
+ *
+ * Components use semantic tokens only, never raw palette values.
+ * Contrast is re-verified against WCAG 2.2 AA in M1.8; adjust lightness, not hue.
+ */
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+
+  --color-trust-good: var(--trust-good);
+  --color-trust-good-bg: var(--trust-good-bg);
+  --color-trust-mixed: var(--trust-mixed);
+  --color-trust-mixed-bg: var(--trust-mixed-bg);
+  --color-trust-poor: var(--trust-poor);
+  --color-trust-poor-bg: var(--trust-poor-bg);
+  --color-trust-unknown: var(--muted-foreground);
+
+  --radius-card: 0.75rem;
+  --radius-control: 0.5rem;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --background: oklch(0.99 0.003 95);
+  --foreground: oklch(0.21 0.02 260);
+  --card: oklch(1 0 0);
+  --muted: oklch(0.96 0.006 95);
+  --muted-foreground: oklch(0.48 0.02 260);
+  --border: oklch(0.9 0.008 95);
+  --primary: oklch(0.45 0.09 195);
+  --primary-foreground: oklch(0.98 0.01 195);
+  --ring: oklch(0.55 0.12 195);
+  --destructive: oklch(0.55 0.2 27);
+
+  --trust-good: oklch(0.47 0.11 155);
+  --trust-good-bg: oklch(0.95 0.04 155);
+  --trust-mixed: oklch(0.5 0.11 70);
+  --trust-mixed-bg: oklch(0.96 0.05 85);
+  --trust-poor: oklch(0.5 0.16 30);
+  --trust-poor-bg: oklch(0.95 0.04 30);
+}
+
+.dark {
+  --background: oklch(0.17 0.01 260);
+  --foreground: oklch(0.95 0.005 95);
+  --card: oklch(0.21 0.012 260);
+  --muted: oklch(0.25 0.012 260);
+  --muted-foreground: oklch(0.72 0.01 260);
+  --border: oklch(0.32 0.012 260);
+  --primary: oklch(0.75 0.1 195);
+  --primary-foreground: oklch(0.18 0.02 195);
+  --ring: oklch(0.75 0.1 195);
+  --destructive: oklch(0.7 0.17 27);
+
+  --trust-good: oklch(0.78 0.12 155);
+  --trust-good-bg: oklch(0.28 0.05 155);
+  --trust-mixed: oklch(0.82 0.12 80);
+  --trust-mixed-bg: oklch(0.3 0.05 75);
+  --trust-poor: oklch(0.75 0.14 30);
+  --trust-poor-bg: oklch(0.3 0.06 30);
+}
+
+/* Respect the OS preference when no class has been set. */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: oklch(0.17 0.01 260);
+    --foreground: oklch(0.95 0.005 95);
+    --card: oklch(0.21 0.012 260);
+    --muted: oklch(0.25 0.012 260);
+    --muted-foreground: oklch(0.72 0.01 260);
+    --border: oklch(0.32 0.012 260);
+    --primary: oklch(0.75 0.1 195);
+    --primary-foreground: oklch(0.18 0.02 195);
+    --ring: oklch(0.75 0.1 195);
+    --destructive: oklch(0.7 0.17 27);
+
+    --trust-good: oklch(0.78 0.12 155);
+    --trust-good-bg: oklch(0.28 0.05 155);
+    --trust-mixed: oklch(0.82 0.12 80);
+    --trust-mixed-bg: oklch(0.3 0.05 75);
+    --trust-poor: oklch(0.75 0.14 30);
+    --trust-poor-bg: oklch(0.3 0.06 30);
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  /* UI §5.2: prices and stats use tabular figures. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* UI §5.3: all motion is disabled under prefers-reduced-motion. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

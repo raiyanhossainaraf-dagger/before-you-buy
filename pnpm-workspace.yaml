@@ -1,0 +1,13 @@
+packages:
+  - apps/*
+  - packages/*
+
+# SEC-81: freshly published packages are not installed immediately (3 days).
+# Document an exception here when a security patch must land sooner.
+minimumReleaseAge: 4320
+
+# SEC-82: lifecycle scripts run only for packages on this allowlist.
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - esbuild
+  - sharp

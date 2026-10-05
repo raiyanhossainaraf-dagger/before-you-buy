@@ -1,0 +1,6 @@
+@import '@byb/ui/styles/tokens.css';
+
+/* Tailwind v4 content detection starts from the CSS file, which lives in
+   packages/ui — so the app and the UI package are named explicitly. */
+@source "../";
+@source "../../../packages/ui/src";
