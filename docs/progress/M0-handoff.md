@@ -24,9 +24,20 @@ Plan file: `C:\Users\ARAF\.claude\plans\vast-floating-lollipop.md` (full task br
 - `@react-email/components` is deprecated upstream ("no longer supported") — not used. The waitlist-confirm template is plain JSX rendered through `@react-email/render` directly.
 - `@base-ui-components/react` was renamed upstream to `@base-ui/react` — `packages/ui` depends on the new name (`1.8.0`).
 
+**M0.2 — Gate 0 landing page.** Committed as `68b92c7 feat(web): landing page (M0.2)`, pushed to `origin/main`.
+
+- `apps/web/app/page.tsx` composes `app/_components/landing/`: `Hero` (PRD §3 positioning claim, verbatim), `TrustQuestions` (the three questions), `HowItWorks` (3 steps), `PricingPreview` (reads `PLANS` from `@byb/config`, not hard-coded), `Faq` (native `<details>`/`<summary>` — no new Accordion component needed), `LandingFooter` (legal links).
+- Marked slots (`data-slot="demo-m0-3"` / `"email-capture-m0-4"` / `"preorder-m0-5"`) hold the M0.3 demo cards, M0.4 email form and M0.5 pre-order card — not built yet, per the task brief.
+- Legal placeholder pages added so the footer links resolve: `/privacy` (LEGAL-08), `/terms` (LEGAL-09), `/pre-order-terms` (LEGAL-10), `/affiliate-disclosure` (LEGAL-05) — all share one `LegalPlaceholder` component, content marked "pending legal review"; M0.6 replaces the content.
+- No new shadcn components were added to `packages/ui` for this task — the page uses tokens (`bg-card`, `border-border`, `text-muted-foreground`, etc.), `cn`, and `formatCents` only. `packages/ui` still has no `Button`/`Card`/`Accordion`; the first component that needs one (likely `ResultCard` in M0.3 or M8/M11) should add it then.
+- `apps/web/app/layout.tsx`: `suppressHydrationWarning` added to `<html>` and `<body>` (browser extensions inject attributes there).
+- `e2e/landing.spec.ts` (Playwright + `@axe-core/playwright`): asserts structure (sections/headings, the three trust questions, the three how-it-works steps, slot presence, footer links resolve) and that pricing values match `packages/config` — not exact copy. Axe checked at 375px and 1440px, no serious/critical violations. Root `package.json` gained `@byb/config` and `@byb/ui` as devDependencies so the spec can import `PLANS` and `formatCents` directly.
+- Manually checked 768px and 1024px via screenshot (grids collapse from 3 → fits each breakpoint per UI §6); not part of the automated suite since the task only asked for axe at 375/1440.
+- `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e` all pass.
+
 ## Not started
 
-M0.2 (landing page) through M0.9 (test kit) — see the plan file for the full breakdown, the font/demo-data/M0.9 decisions already made with the user, and the verification table. M0.8 (deploy) stays deferred per the original scope.
+M0.3 (demo cards) through M0.9 (test kit) — see the plan file for the full breakdown, the font/demo-data/M0.9 decisions already made with the user, and the verification table. M0.8 (deploy) stays deferred per the original scope.
 
 Nothing under `packages/db/migrations/` exists yet — no migration has been generated or run.
 
@@ -45,8 +56,9 @@ Verify the scaffold is still green before continuing:
 
 ```bash
 pnpm lint && pnpm typecheck && pnpm test
+pnpm --filter @byb/web build && pnpm test:e2e   # e2e needs a production build first (playwright.config.ts webServer runs `next start`)
 ```
 
 ## Next step
 
-M0.2 — Gate 0 landing page (`app/page.tsx` + `app/_components/`): hero, three trust questions, how-it-works, pricing preview, FAQ, legal footer, affiliate disclosure. Per the user's standing instruction, do not start this until told to.
+M0.3 — Live demo on three real products: a one-off capture script (`pnpm demo:capture`, already scaffolded) stores precomputed comparison JSON in `apps/web/content/demo/`; render it with real result-card components in the `demo-m0-3` slot. No affiliate links in the demo. Per the user's standing instruction, do not start this until told to.
