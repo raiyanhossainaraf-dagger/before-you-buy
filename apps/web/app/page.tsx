@@ -1,14 +1,26 @@
-import { POSITIONING_CLAIM } from '@byb/config';
+import { Hero } from './_components/landing/hero';
+import { TrustQuestions } from './_components/landing/trust-questions';
+import { HowItWorks } from './_components/landing/how-it-works';
+import { DemoSlot, EmailCaptureSlot, PreorderSlot } from './_components/landing/slots';
+import { PricingPreview } from './_components/landing/pricing-preview';
+import { Faq } from './_components/landing/faq';
+import { LandingFooter } from './_components/landing/footer';
 
-/** Placeholder until M0.2 builds the Gate 0 landing page (UI §7.14). */
+/** M0.2 — Gate 0 landing page (UI §7.14, PRD §3). */
 export default function HomePage() {
   return (
-    <main id="main" className="mx-auto max-w-2xl px-4 py-16">
-      <h1 className="text-3xl font-semibold tracking-tight">Before You Buy</h1>
-      <p className="mt-4 text-lg text-muted-foreground">{POSITIONING_CLAIM}</p>
-      <p className="mt-8 text-sm text-muted-foreground">
-        The Gate 0 landing page arrives in M0.2.
-      </p>
-    </main>
+    <>
+      <main id="main">
+        <Hero />
+        <TrustQuestions />
+        <HowItWorks />
+        <DemoSlot />
+        <EmailCaptureSlot />
+        <PreorderSlot />
+        <PricingPreview />
+        <Faq />
+      </main>
+      <LandingFooter />
+    </>
   );
 }
