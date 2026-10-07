@@ -42,6 +42,17 @@ export async function markPreorderRefunded(
   return updated.length > 0;
 }
 
+/** `pnpm preorder:refund <id>` (M0.5): refund by the row's own id, not the session id. */
+export async function refundPreorderById(id: string, now: Date) {
+  const updated = await db()
+    .update(preorders)
+    .set({ status: 'refunded', refundedAt: now })
+    .where(eq(preorders.id, id))
+    .returning();
+
+  return updated[0] ?? null;
+}
+
 export async function countPreorders(): Promise<{ paid: number; refunded: number }> {
   const rows = await db()
     .select({ status: preorders.status, total: count() })

@@ -78,9 +78,24 @@ Plan file: `C:\Users\ARAF\.claude\plans\vast-floating-lollipop.md` (full task br
 - Tests: `confirm-token.test.ts`, `rate-limit.test.ts`, `turnstile.test.ts`, `analytics.test.ts`, `public.test.ts`, `server.test.ts` (unit); `packages/db/src/__tests__/waitlist.integration.test.ts` via the new `pnpm test:integration` (`vitest.integration.config.ts`, needs `pnpm services:up`) — idempotent upsert, confirm-is-a-no-op-on-replay, citext case-insensitivity; `e2e/waitlist.spec.ts` — full browser flow (fill form → real Turnstile widget → submit → poll Mailpit's REST API for the email → follow the link → confirmed page), invalid-token page, unchecked-consent validation, axe at 375px. Manually verified the same flow with curl + Mailpit's API + a direct `psql` check that `confirmed_at` was set.
 - `pnpm lint && pnpm typecheck && pnpm test && pnpm test:integration` all pass (84 unit tests, 3 integration); `pnpm --filter @byb/web build && pnpm test:e2e` passes (16 e2e tests, all specs).
 
+**M0.5 — Pre-orders (mock + Stripe providers).** Local-only.
+
+- `apps/web/lib/payments/`: `PaymentProvider` interface (`createCheckout`, `parseWebhook`), selected by `PAYMENTS_PROVIDER` via `getPaymentProvider()`. `mock.ts` is the local default: `createCheckout` points at `/checkout/mock?...`; its "Pay" button posts to `/api/payments/mock-pay`, which signs the webhook body server-side (`mock-signature.ts`, HMAC-SHA256 over the raw body, reusing `LINK_SIGNING_SECRET` rather than adding a new secret) and forwards it to `/api/payments/webhook` — the exact route Stripe would call. `stripe.ts` is written and unit-tested (Stripe's `generateTestHeaderString` test helper, no network calls) but unselected: real Checkout Session creation plus `webhooks.constructEvent` signature verification; only `checkout.session.completed` is acted on — TR-BILL-07 puts Stripe refunds in the dashboard, not a webhook, so every other event type is `ignored`.
+- `apps/web/app/api/preorder/checkout/route.ts` (POST): validates `preorderCheckoutRequestSchema`, rate-limits and Turnstile-verifies the same way the waitlist route does, then calls `getPaymentProvider().createCheckout()` and returns `{ checkoutUrl, sessionId }`.
+- `apps/web/app/api/payments/webhook/route.tsx` (POST): one handler for both providers. `preorderRepo.recordPaidPreorder()`'s `ON CONFLICT DO NOTHING` on `stripe_checkout_session_id` makes a duplicated delivery a no-op — `created` is only `true` the first time, so the receipt email and `preorder_paid` analytics event fire exactly once.
+- `apps/web/app/checkout/mock/page.tsx`, `apps/web/app/preorder/{success,cancel}/page.tsx`: the test-checkout page (clearly labeled "Test checkout — no real payment"), and the two outcome pages.
+- `apps/web/app/_components/landing/preorder-card.tsx`: the real pre-order card (email + Turnstile, same pattern as `WaitlistForm`), replacing the M0.2 placeholder slot.
+- `packages/email/src/templates/{preorder-receipt,preorder-refunded}.tsx`: receipt sent on first paid webhook; refund email sent by the script below.
+- `packages/db/src/repositories/preorders.ts` gained `refundPreorderById(id, now)` (updates by the row's own id, not the session id). `scripts/preorder-refund.tsx` (`pnpm preorder:refund <id>`): marks a pre-order refunded and emails the customer — covers the `mock` provider used locally; real Stripe refunds go through the dashboard per TR-BILL-07.
+- `apps/web/app/pre-order-terms/page.tsx`: replaced the generic `LegalPlaceholder` with real draft content (still headed "pending legal review," LEGAL-10) — refund terms, the automatic-refund-if-launch-is-delayed clause, and a chargeback note, all from the DECIDE-15/LEGAL-10 defaults.
+- Tests: `mock-signature.test.ts`, `mock.test.ts`, `stripe.test.ts` (unit, 10 new); `packages/db/src/__tests__/preorders.integration.test.ts` (idempotency, refund-by-id, counts, 7 tests including 3 pre-existing from the repo's earlier webhook work); `e2e/preorder.spec.ts` — full mock-checkout flow (fill email → mock checkout → Pay → success page → receipt in Mailpit with the correct `$49.00`), cancel path, axe at 375px. `e2e/waitlist.spec.ts`'s two email-field locators were scoped to `[data-slot="email-capture-m0-4"]` since the page now has two "Email" labels.
+- Manually verified `pnpm preorder:refund <id>` end to end against a real local row: marks `refunded_at`, sends the refund email (confirmed in Mailpit), and exits cleanly (the script calls `process.exit(0)` after sending — otherwise the open `postgres-js` pool keeps the process alive).
+- `pnpm lint && pnpm typecheck && pnpm test && pnpm test:integration` all pass (104 unit tests, 11 integration); `pnpm --filter @byb/web build && pnpm test:e2e` passes (19 e2e tests).
+- DEC-037 records the design choices (payments lib location, mock signing secret reuse, Stripe refund scope, refund script keying on row id).
+
 ## Not started
 
-M0.5 (pre-orders) through M0.9 (test kit) — see the plan file for the full breakdown, the font/demo-data/M0.9 decisions already made with the user, and the verification table. M0.8 (deploy) stays deferred per the original scope.
+M0.6 (legal pages) through M0.9 (test kit) — see the plan file for the full breakdown, the font/demo-data/M0.9 decisions already made with the user, and the verification table. M0.8 (deploy) stays deferred per the original scope.
 
 ## Commands to pick this back up
 
@@ -102,4 +117,4 @@ pnpm --filter @byb/web build && pnpm test:e2e   # e2e needs a production build f
 
 ## Next step
 
-M0.4 is fully done: migration applied, waitlist form + double opt-in + confirm page working end to end (verified via Playwright and manually), unit/integration/e2e all green. Next up is M0.5 (pre-orders). Per the user's standing instruction, do not start new M0 tasks until told to.
+M0.5 is fully done: mock checkout + webhook + idempotent `preorders` row + receipt email + refund script working end to end (verified via Playwright and manually), unit/integration/e2e all green. Next up is M0.6 (legal pages). Per the user's standing instruction, do not start new M0 tasks until told to.

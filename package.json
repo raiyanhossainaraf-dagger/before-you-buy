@@ -25,12 +25,15 @@
     "env:local": "node scripts/env-local.mjs",
     "demo:capture": "tsx scripts/capture-demo.ts",
     "demo:derive": "tsx scripts/derive-demo.ts",
-    "demo:validate": "tsx scripts/validate-demo.ts"
+    "demo:validate": "tsx scripts/validate-demo.ts",
+    "preorder:refund": "tsx scripts/preorder-refund.tsx"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
     "@byb/config": "workspace:*",
     "@byb/core": "workspace:*",
+    "@byb/db": "workspace:*",
+    "@byb/email": "workspace:*",
     "@byb/schemas": "workspace:*",
     "@byb/ui": "workspace:*",
     "@playwright/test": "1.63.0",
@@ -40,6 +43,7 @@
     "eslint-config-next": "16.3.8",
     "eslint-plugin-react": "7.37.5",
     "prettier": "3.9.9",
+    "react": "19.3.0",
     "tsx": "4.23.15",
     "turbo": "2.11.6",
     "typescript": "5.9.3",

@@ -27,8 +27,9 @@ test.describe('M0.4 waitlist', () => {
     const email = `e2e-${Date.now()}@example.com`;
 
     await page.goto('/');
-    await page.getByLabel('Email', { exact: true }).fill(email);
-    await page.getByLabel(/launches/).check();
+    const waitlistSlot = page.locator('[data-slot="email-capture-m0-4"]');
+    await waitlistSlot.getByLabel('Email', { exact: true }).fill(email);
+    await waitlistSlot.getByLabel(/launches/).check();
 
     // SEC-30: the widget makes a real network call to Cloudflare (always-pass test key).
     await expect(page.getByRole('button', { name: 'Get notified' })).toBeEnabled({ timeout: 15_000 });
@@ -48,7 +49,7 @@ test.describe('M0.4 waitlist', () => {
   test('rejects an unchecked consent box without calling the server', async ({ page }) => {
     const email = `e2e-noconsent-${Date.now()}@example.com`;
     await page.goto('/');
-    await page.getByLabel('Email', { exact: true }).fill(email);
+    await page.locator('[data-slot="email-capture-m0-4"]').getByLabel('Email', { exact: true }).fill(email);
     await expect(page.getByRole('button', { name: 'Get notified' })).toBeEnabled({ timeout: 15_000 });
     await page.getByRole('button', { name: 'Get notified' }).click();
     await expect(page.getByRole('alert').filter({ hasText: 'Consent is required' })).toBeVisible();

@@ -17,6 +17,12 @@ importers:
       '@byb/core':
         specifier: workspace:*
         version: link:packages/core
+      '@byb/db':
+        specifier: workspace:*
+        version: link:packages/db
+      '@byb/email':
+        specifier: workspace:*
+        version: link:packages/email
       '@byb/schemas':
         specifier: workspace:*
         version: link:packages/schemas
@@ -44,6 +50,9 @@ importers:
       prettier:
         specifier: 3.9.9
         version: 3.9.9
+      react:
+        specifier: 19.3.0
+        version: 19.3.0
       tsx:
         specifier: 4.23.15
         version: 4.23.15

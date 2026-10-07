@@ -1,6 +1,7 @@
 import { demoComparisonSchema, type DemoComparison } from '@byb/schemas';
 import { DemoPicker } from './demo-picker';
 import { WaitlistForm } from './waitlist-form';
+import { PreorderCard } from './preorder-card';
 import sonyWh1000xm5 from '../../../content/demo/sony-wh-1000xm5.json';
 import robotVacuum from '../../../content/demo/robot-vacuum.json';
 import ipadBase from '../../../content/demo/ipad-base.json';
@@ -92,11 +93,17 @@ export function EmailCaptureSlot() {
 
 export function PreorderSlot() {
   return (
-    <SlotSection
-      slot="preorder-m0-5"
-      headingId="preorder-heading"
-      heading="Reserve launch pricing"
-      body="Pre-orders open soon."
-    />
+    <section
+      data-slot="preorder-m0-5"
+      aria-labelledby="preorder-heading"
+      className="mx-auto max-w-5xl px-4 py-12"
+    >
+      <h2 id="preorder-heading" className="text-2xl font-semibold tracking-tight">
+        Reserve launch pricing
+      </h2>
+      <div className="mt-6">
+        <PreorderCard />
+      </div>
+    </section>
   );
 }
