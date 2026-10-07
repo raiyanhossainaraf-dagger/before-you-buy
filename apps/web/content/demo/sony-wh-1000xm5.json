@@ -1,7 +1,7 @@
 {
   "slug": "sony-wh-1000xm5",
-  "capturedAt": "TODO",
-  "capturedBy": "TODO",
+  "capturedAt": "2026-10-07T07:15:01Z",
+  "capturedBy": "Claude (browser automation)",
   "product": {
     "name": "Sony WH-1000XM5 Wireless Headphones (Black)",
     "brand": "Sony",
@@ -12,19 +12,19 @@
     {
       "listingId": "sony-wh1000xm5-amazon",
       "platform": "amazon",
-      "title": "TODO",
+      "title": "Sony WH-1000XM5 Premium Noise Cancelling Wireless Headphones, Black",
       "condition": "new",
       "seller": {
-        "name": "TODO",
-        "isRetailer": true
+        "name": "Focus Camera LLC",
+        "isRetailer": false
       },
       "warranty": {
-        "months": "TODO",
-        "provider": "manufacturer"
+        "months": null,
+        "provider": "unknown"
       },
       "returns": {
-        "windowDays": "TODO",
-        "freeReturns": "TODO"
+        "windowDays": 30,
+        "freeReturns": true
       },
       "inStock": true,
       "match": {
@@ -33,20 +33,20 @@
         "method": "mpn"
       },
       "listedPrice": {
-        "amountCents": "TODO",
+        "amountCents": 19800,
         "currency": "USD"
       },
       "shippingCost": {
-        "amountCents": "TODO",
+        "amountCents": 0,
         "currency": "USD"
       },
       "estimatedTax": {
-        "amountCents": "TODO",
+        "amountCents": 1757,
         "currency": "USD"
       },
       "landedPrice": {
-        "minCents": "TODO",
-        "maxCents": "TODO",
+        "minCents": 21557,
+        "maxCents": 21557,
         "currency": "USD"
       },
       "landedPriceComplete": true,
@@ -67,11 +67,11 @@
         ],
         "reviewCount": 41230,
         "averageRating": 4.7,
-        "analyzedAt": "TODO",
+        "analyzedAt": "2026-10-07T07:15:01Z",
         "modelVersion": "trust-v1-example",
         "illustrative": true
       },
-      "checkedAt": "TODO",
+      "checkedAt": "2026-10-07T07:15:01Z",
       "affiliate": {
         "isAffiliate": false
       }
@@ -79,19 +79,19 @@
     {
       "listingId": "sony-wh1000xm5-ebay",
       "platform": "ebay",
-      "title": "TODO",
+      "title": "Sony - WH-1000XM5 Wireless Noise Cancelling Over-the-Ear Headphones - Black",
       "condition": "new",
       "seller": {
-        "name": "TODO",
-        "isRetailer": "TODO"
+        "name": "Cheaper_Than_Retail_0",
+        "isRetailer": false
       },
       "warranty": {
-        "months": "TODO",
-        "provider": "seller"
+        "months": 12,
+        "provider": "manufacturer"
       },
       "returns": {
-        "windowDays": "TODO",
-        "freeReturns": "TODO"
+        "windowDays": 0,
+        "freeReturns": false
       },
       "inStock": true,
       "match": {
@@ -100,20 +100,20 @@
         "method": "mpn"
       },
       "listedPrice": {
-        "amountCents": "TODO",
+        "amountCents": 19800,
         "currency": "USD"
       },
       "shippingCost": {
-        "amountCents": "TODO",
+        "amountCents": 0,
         "currency": "USD"
       },
       "estimatedTax": {
-        "amountCents": "TODO",
+        "amountCents": 1757,
         "currency": "USD"
       },
       "landedPrice": {
-        "minCents": "TODO",
-        "maxCents": "TODO",
+        "minCents": 21557,
+        "maxCents": 21557,
         "currency": "USD"
       },
       "landedPriceComplete": true,
@@ -134,11 +134,11 @@
         ],
         "reviewCount": 980,
         "averageRating": 4.5,
-        "analyzedAt": "TODO",
+        "analyzedAt": "2026-10-07T07:17:23Z",
         "modelVersion": "trust-v1-example",
         "illustrative": true
       },
-      "checkedAt": "TODO",
+      "checkedAt": "2026-10-07T07:17:23Z",
       "attribution": {
         "text": "From eBay",
         "logo": "ebay"
@@ -150,19 +150,19 @@
     {
       "listingId": "sony-wh1000xm5-bestbuy",
       "platform": "bestbuy",
-      "title": "TODO",
+      "title": "Sony - WH-1000XM5 Wireless Noise Cancelling Over-the-Ear Headphones - Black",
       "condition": "new",
       "seller": {
         "name": "Best Buy",
         "isRetailer": true
       },
       "warranty": {
-        "months": "TODO",
-        "provider": "manufacturer"
+        "months": null,
+        "provider": "unknown"
       },
       "returns": {
-        "windowDays": "TODO",
-        "freeReturns": "TODO"
+        "windowDays": 15,
+        "freeReturns": true
       },
       "inStock": true,
       "match": {
@@ -171,24 +171,27 @@
         "method": "mpn"
       },
       "listedPrice": {
-        "amountCents": "TODO",
+        "amountCents": 19800,
         "currency": "USD"
       },
       "shippingCost": {
-        "amountCents": "TODO",
+        "minCents": 0,
+        "maxCents": 1099,
         "currency": "USD"
       },
       "estimatedTax": {
-        "amountCents": "TODO",
+        "amountCents": 1757,
         "currency": "USD"
       },
       "landedPrice": {
-        "minCents": "TODO",
-        "maxCents": "TODO",
+        "minCents": 21557,
+        "maxCents": 22656,
         "currency": "USD"
       },
-      "landedPriceComplete": true,
-      "uncertainComponents": [],
+      "landedPriceComplete": false,
+      "uncertainComponents": [
+        "shipping"
+      ],
       "priceVerification": {
         "status": "not_required"
       },
@@ -205,11 +208,11 @@
         ],
         "reviewCount": 5120,
         "averageRating": 4.6,
-        "analyzedAt": "TODO",
+        "analyzedAt": "2026-10-07T07:19:16Z",
         "modelVersion": "trust-v1-example",
         "illustrative": true
       },
-      "checkedAt": "TODO",
+      "checkedAt": "2026-10-07T07:19:16Z",
       "attribution": {
         "text": "From Best Buy",
         "logo": "bestbuy"
@@ -221,7 +224,53 @@
   ],
   "ranking": {
     "conditionScope": "new",
-    "top": [],
+    "top": [
+      {
+        "listingId": "sony-wh1000xm5-amazon",
+        "rank": 1,
+        "label": "Lowest delivered price",
+        "reasons": [
+          {
+            "code": "LOWER_LANDED_PRICE",
+            "text": "$0.00 less delivered than #2"
+          },
+          {
+            "code": "FREE_RETURNS",
+            "text": "Free returns"
+          }
+        ]
+      },
+      {
+        "listingId": "sony-wh1000xm5-ebay",
+        "rank": 2,
+        "label": "Best returns",
+        "reasons": [
+          {
+            "code": "HIGHER_LANDED_PRICE",
+            "text": "$0.00 more delivered than #1"
+          },
+          {
+            "code": "RETURNS_WINDOW",
+            "text": "0-day returns vs 30"
+          }
+        ]
+      },
+      {
+        "listingId": "sony-wh1000xm5-bestbuy",
+        "rank": 3,
+        "label": "Other option we checked",
+        "reasons": [
+          {
+            "code": "HIGHER_LANDED_PRICE",
+            "text": "$5.50 more delivered than #1"
+          },
+          {
+            "code": "FREE_RETURNS",
+            "text": "Free returns"
+          }
+        ]
+      }
+    ],
     "excluded": []
   },
   "history": {

@@ -1,7 +1,7 @@
 {
   "slug": "ipad-base",
-  "capturedAt": "TODO",
-  "capturedBy": "TODO",
+  "capturedAt": "2026-10-07T07:03:22Z",
+  "capturedBy": "Claude (browser automation)",
   "product": {
     "name": "Apple iPad 128GB Wi-Fi (current base model)",
     "brand": "Apple",
@@ -12,19 +12,19 @@
     {
       "listingId": "ipad-base-amazon",
       "platform": "amazon",
-      "title": "TODO",
+      "title": "Apple iPad 11-inch: A16 chip, 11-inch Model, Liquid Retina Display, 128GB, Wi-Fi 6, 12MP Front/12MP Back Camera, Touch ID, All-Day Battery Life — Blue",
       "condition": "new",
       "seller": {
-        "name": "TODO",
+        "name": "Amazon.com",
         "isRetailer": true
       },
       "warranty": {
-        "months": "TODO",
+        "months": null,
         "provider": "manufacturer"
       },
       "returns": {
-        "windowDays": "TODO",
-        "freeReturns": "TODO"
+        "windowDays": 15,
+        "freeReturns": true
       },
       "inStock": true,
       "match": {
@@ -33,20 +33,20 @@
         "method": "mpn"
       },
       "listedPrice": {
-        "amountCents": "TODO",
+        "amountCents": 39900,
         "currency": "USD"
       },
       "shippingCost": {
-        "amountCents": "TODO",
+        "amountCents": 0,
         "currency": "USD"
       },
       "estimatedTax": {
-        "amountCents": "TODO",
+        "amountCents": 3541,
         "currency": "USD"
       },
       "landedPrice": {
-        "minCents": "TODO",
-        "maxCents": "TODO",
+        "minCents": 43441,
+        "maxCents": 43441,
         "currency": "USD"
       },
       "landedPriceComplete": true,
@@ -67,11 +67,11 @@
         ],
         "reviewCount": 62340,
         "averageRating": 4.8,
-        "analyzedAt": "TODO",
+        "analyzedAt": "2026-10-07T07:03:22Z",
         "modelVersion": "trust-v1-example",
         "illustrative": true
       },
-      "checkedAt": "TODO",
+      "checkedAt": "2026-10-07T07:03:22Z",
       "affiliate": {
         "isAffiliate": false
       }
@@ -79,19 +79,19 @@
     {
       "listingId": "ipad-base-ebay",
       "platform": "ebay",
-      "title": "TODO",
+      "title": "New Apple iPad 11 (A16) 128GB Pink MD4E4LL/A Factory Sealed",
       "condition": "new",
       "seller": {
-        "name": "TODO",
-        "isRetailer": "TODO"
+        "name": "wally_07",
+        "isRetailer": false
       },
       "warranty": {
-        "months": "TODO",
-        "provider": "seller"
+        "months": null,
+        "provider": "unknown"
       },
       "returns": {
-        "windowDays": "TODO",
-        "freeReturns": "TODO"
+        "windowDays": 0,
+        "freeReturns": false
       },
       "inStock": true,
       "match": {
@@ -100,20 +100,20 @@
         "method": "mpn"
       },
       "listedPrice": {
-        "amountCents": "TODO",
+        "amountCents": 39900,
         "currency": "USD"
       },
       "shippingCost": {
-        "amountCents": "TODO",
+        "amountCents": 0,
         "currency": "USD"
       },
       "estimatedTax": {
-        "amountCents": "TODO",
+        "amountCents": 3541,
         "currency": "USD"
       },
       "landedPrice": {
-        "minCents": "TODO",
-        "maxCents": "TODO",
+        "minCents": 43441,
+        "maxCents": 43441,
         "currency": "USD"
       },
       "landedPriceComplete": true,
@@ -134,11 +134,11 @@
         ],
         "reviewCount": 410,
         "averageRating": 4.6,
-        "analyzedAt": "TODO",
+        "analyzedAt": "2026-10-07T07:12:30Z",
         "modelVersion": "trust-v1-example",
         "illustrative": true
       },
-      "checkedAt": "TODO",
+      "checkedAt": "2026-10-07T07:12:30Z",
       "attribution": {
         "text": "From eBay",
         "logo": "ebay"
@@ -150,19 +150,19 @@
     {
       "listingId": "ipad-base-bestbuy",
       "platform": "bestbuy",
-      "title": "TODO",
+      "title": "Apple - 11-inch iPad A16 chip with Wi-Fi - 128GB - Silver",
       "condition": "new",
       "seller": {
         "name": "Best Buy",
         "isRetailer": true
       },
       "warranty": {
-        "months": "TODO",
-        "provider": "manufacturer"
+        "months": null,
+        "provider": "unknown"
       },
       "returns": {
-        "windowDays": "TODO",
-        "freeReturns": "TODO"
+        "windowDays": 15,
+        "freeReturns": true
       },
       "inStock": true,
       "match": {
@@ -171,24 +171,27 @@
         "method": "mpn"
       },
       "listedPrice": {
-        "amountCents": "TODO",
+        "amountCents": 39900,
         "currency": "USD"
       },
       "shippingCost": {
-        "amountCents": "TODO",
+        "minCents": 0,
+        "maxCents": 1099,
         "currency": "USD"
       },
       "estimatedTax": {
-        "amountCents": "TODO",
+        "amountCents": 3541,
         "currency": "USD"
       },
       "landedPrice": {
-        "minCents": "TODO",
-        "maxCents": "TODO",
+        "minCents": 43441,
+        "maxCents": 44540,
         "currency": "USD"
       },
-      "landedPriceComplete": true,
-      "uncertainComponents": [],
+      "landedPriceComplete": false,
+      "uncertainComponents": [
+        "shipping"
+      ],
       "priceVerification": {
         "status": "not_required"
       },
@@ -205,11 +208,11 @@
         ],
         "reviewCount": 4890,
         "averageRating": 4.7,
-        "analyzedAt": "TODO",
+        "analyzedAt": "2026-10-07T07:14:11Z",
         "modelVersion": "trust-v1-example",
         "illustrative": true
       },
-      "checkedAt": "TODO",
+      "checkedAt": "2026-10-07T07:14:11Z",
       "attribution": {
         "text": "From Best Buy",
         "logo": "bestbuy"
@@ -221,20 +224,20 @@
     {
       "listingId": "ipad-base-amazon-renewed",
       "platform": "amazon",
-      "title": "TODO",
+      "title": "2025 Apple iPad, (11-inch, Wi-Fi, 128GB) Silver (Renewed Premium)",
       "condition": "refurbished",
       "conditionDetail": "Renewed",
       "seller": {
-        "name": "TODO",
-        "isRetailer": "TODO"
+        "name": "Sole Providers",
+        "isRetailer": false
       },
       "warranty": {
-        "months": "TODO",
-        "provider": "seller"
+        "months": null,
+        "provider": "unknown"
       },
       "returns": {
-        "windowDays": "TODO",
-        "freeReturns": "TODO"
+        "windowDays": 90,
+        "freeReturns": true
       },
       "inStock": true,
       "match": {
@@ -243,20 +246,20 @@
         "method": "mpn"
       },
       "listedPrice": {
-        "amountCents": "TODO",
+        "amountCents": 40999,
         "currency": "USD"
       },
       "shippingCost": {
-        "amountCents": "TODO",
+        "amountCents": 0,
         "currency": "USD"
       },
       "estimatedTax": {
-        "amountCents": "TODO",
+        "amountCents": 3639,
         "currency": "USD"
       },
       "landedPrice": {
-        "minCents": "TODO",
-        "maxCents": "TODO",
+        "minCents": 44638,
+        "maxCents": 44638,
         "currency": "USD"
       },
       "landedPriceComplete": true,
@@ -277,11 +280,11 @@
         ],
         "reviewCount": 1230,
         "averageRating": 4.3,
-        "analyzedAt": "TODO",
+        "analyzedAt": "2026-10-07T07:04:34Z",
         "modelVersion": "trust-v1-example",
         "illustrative": true
       },
-      "checkedAt": "TODO",
+      "checkedAt": "2026-10-07T07:04:34Z",
       "affiliate": {
         "isAffiliate": false
       }
@@ -289,17 +292,53 @@
   ],
   "ranking": {
     "conditionScope": "new",
-    "top": [],
-    "cheaperAlternative": {
-      "listingId": "ipad-base-amazon-renewed",
-      "savingCents": "TODO",
-      "reasons": [
-        {
-          "code": "TODO",
-          "text": "TODO"
-        }
-      ]
-    },
+    "top": [
+      {
+        "listingId": "ipad-base-amazon",
+        "rank": 1,
+        "label": "Lowest delivered price",
+        "reasons": [
+          {
+            "code": "LOWER_LANDED_PRICE",
+            "text": "$0.00 less delivered than #2"
+          },
+          {
+            "code": "FREE_RETURNS",
+            "text": "Free returns"
+          }
+        ]
+      },
+      {
+        "listingId": "ipad-base-ebay",
+        "rank": 2,
+        "label": "Best returns",
+        "reasons": [
+          {
+            "code": "HIGHER_LANDED_PRICE",
+            "text": "$0.00 more delivered than #1"
+          },
+          {
+            "code": "RETURNS_WINDOW",
+            "text": "0-day returns vs 15"
+          }
+        ]
+      },
+      {
+        "listingId": "ipad-base-bestbuy",
+        "rank": 3,
+        "label": "Other option we checked",
+        "reasons": [
+          {
+            "code": "HIGHER_LANDED_PRICE",
+            "text": "$5.50 more delivered than #1"
+          },
+          {
+            "code": "FREE_RETURNS",
+            "text": "Free returns"
+          }
+        ]
+      }
+    ],
     "excluded": []
   },
   "history": {

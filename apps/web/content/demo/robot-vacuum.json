@@ -1,10 +1,10 @@
 {
   "slug": "robot-vacuum",
-  "capturedAt": "TODO",
-  "capturedBy": "TODO",
+  "capturedAt": "2026-10-07T07:21:36Z",
+  "capturedBy": "Claude (browser automation)",
   "product": {
-    "name": "TODO",
-    "brand": "TODO",
+    "name": "Shark AI Ultra Robot Vacuum, AV2501S",
+    "brand": "Shark",
     "category": "robot vacuums"
   },
   "zip": "10001",
@@ -12,19 +12,19 @@
     {
       "listingId": "robot-vacuum-amazon",
       "platform": "amazon",
-      "title": "TODO",
+      "title": "Shark AV2501S AI Ultra Robot Vacuum, with Matrix Clean, Home Mapping, 30-Day Capacity HEPA Bagless Self Empty Base, Perfect for Pet Hair, Wifi, Dark Grey",
       "condition": "new",
       "seller": {
-        "name": "TODO",
+        "name": "Amazon.com",
         "isRetailer": true
       },
       "warranty": {
-        "months": "TODO",
+        "months": null,
         "provider": "manufacturer"
       },
       "returns": {
-        "windowDays": "TODO",
-        "freeReturns": "TODO"
+        "windowDays": 30,
+        "freeReturns": true
       },
       "inStock": true,
       "match": {
@@ -33,20 +33,20 @@
         "method": "mpn"
       },
       "listedPrice": {
-        "amountCents": "TODO",
+        "amountCents": 23999,
         "currency": "USD"
       },
       "shippingCost": {
-        "amountCents": "TODO",
+        "amountCents": 0,
         "currency": "USD"
       },
       "estimatedTax": {
-        "amountCents": "TODO",
+        "amountCents": 2130,
         "currency": "USD"
       },
       "landedPrice": {
-        "minCents": "TODO",
-        "maxCents": "TODO",
+        "minCents": 26129,
+        "maxCents": 26129,
         "currency": "USD"
       },
       "landedPriceComplete": true,
@@ -67,11 +67,11 @@
         ],
         "reviewCount": 18400,
         "averageRating": 4.4,
-        "analyzedAt": "TODO",
+        "analyzedAt": "2026-10-07T07:23:54Z",
         "modelVersion": "trust-v1-example",
         "illustrative": true
       },
-      "checkedAt": "TODO",
+      "checkedAt": "2026-10-07T07:23:54Z",
       "affiliate": {
         "isAffiliate": false
       }
@@ -79,19 +79,19 @@
     {
       "listingId": "robot-vacuum-ebay",
       "platform": "ebay",
-      "title": "TODO",
+      "title": "Shark AV2501S AI Ultra Robot Vacuum with Matrix Clean and Home Mapping",
       "condition": "new",
       "seller": {
-        "name": "TODO",
-        "isRetailer": "TODO"
+        "name": "EKs Deals",
+        "isRetailer": false
       },
       "warranty": {
-        "months": "TODO",
-        "provider": "seller"
+        "months": null,
+        "provider": "unknown"
       },
       "returns": {
-        "windowDays": "TODO",
-        "freeReturns": "TODO"
+        "windowDays": 30,
+        "freeReturns": false
       },
       "inStock": true,
       "match": {
@@ -100,20 +100,20 @@
         "method": "mpn"
       },
       "listedPrice": {
-        "amountCents": "TODO",
+        "amountCents": 31499,
         "currency": "USD"
       },
       "shippingCost": {
-        "amountCents": "TODO",
+        "amountCents": 0,
         "currency": "USD"
       },
       "estimatedTax": {
-        "amountCents": "TODO",
+        "amountCents": 2796,
         "currency": "USD"
       },
       "landedPrice": {
-        "minCents": "TODO",
-        "maxCents": "TODO",
+        "minCents": 34295,
+        "maxCents": 34295,
         "currency": "USD"
       },
       "landedPriceComplete": true,
@@ -134,11 +134,11 @@
         ],
         "reviewCount": 340,
         "averageRating": 4.3,
-        "analyzedAt": "TODO",
+        "analyzedAt": "2026-10-07T07:22:52Z",
         "modelVersion": "trust-v1-example",
         "illustrative": true
       },
-      "checkedAt": "TODO",
+      "checkedAt": "2026-10-07T07:22:52Z",
       "attribution": {
         "text": "From eBay",
         "logo": "ebay"
@@ -150,19 +150,19 @@
     {
       "listingId": "robot-vacuum-bestbuy",
       "platform": "bestbuy",
-      "title": "TODO",
+      "title": "Shark - AI Ultra Robot Self-Empty Vacuum",
       "condition": "new",
       "seller": {
-        "name": "Best Buy",
-        "isRetailer": true
+        "name": "WackyJacky",
+        "isRetailer": false
       },
       "warranty": {
-        "months": "TODO",
-        "provider": "manufacturer"
+        "months": null,
+        "provider": "unknown"
       },
       "returns": {
-        "windowDays": "TODO",
-        "freeReturns": "TODO"
+        "windowDays": 15,
+        "freeReturns": true
       },
       "inStock": true,
       "match": {
@@ -171,20 +171,20 @@
         "method": "mpn"
       },
       "listedPrice": {
-        "amountCents": "TODO",
+        "amountCents": 36995,
         "currency": "USD"
       },
       "shippingCost": {
-        "amountCents": "TODO",
+        "amountCents": 0,
         "currency": "USD"
       },
       "estimatedTax": {
-        "amountCents": "TODO",
+        "amountCents": 3283,
         "currency": "USD"
       },
       "landedPrice": {
-        "minCents": "TODO",
-        "maxCents": "TODO",
+        "minCents": 40278,
+        "maxCents": 40278,
         "currency": "USD"
       },
       "landedPriceComplete": true,
@@ -205,11 +205,11 @@
         ],
         "reviewCount": 2210,
         "averageRating": 4.5,
-        "analyzedAt": "TODO",
+        "analyzedAt": "2026-10-07T07:21:36Z",
         "modelVersion": "trust-v1-example",
         "illustrative": true
       },
-      "checkedAt": "TODO",
+      "checkedAt": "2026-10-07T07:21:36Z",
       "attribution": {
         "text": "From Best Buy",
         "logo": "bestbuy"
@@ -221,7 +221,53 @@
   ],
   "ranking": {
     "conditionScope": "new",
-    "top": [],
+    "top": [
+      {
+        "listingId": "robot-vacuum-amazon",
+        "rank": 1,
+        "label": "Lowest delivered price",
+        "reasons": [
+          {
+            "code": "LOWER_LANDED_PRICE",
+            "text": "$81.66 less delivered than #2"
+          },
+          {
+            "code": "FREE_RETURNS",
+            "text": "Free returns"
+          }
+        ]
+      },
+      {
+        "listingId": "robot-vacuum-ebay",
+        "rank": 2,
+        "label": "Best returns",
+        "reasons": [
+          {
+            "code": "HIGHER_LANDED_PRICE",
+            "text": "$81.66 more delivered than #1"
+          },
+          {
+            "code": "RETURNS_WINDOW",
+            "text": "30-day returns vs 30"
+          }
+        ]
+      },
+      {
+        "listingId": "robot-vacuum-bestbuy",
+        "rank": 3,
+        "label": "Other option we checked",
+        "reasons": [
+          {
+            "code": "HIGHER_LANDED_PRICE",
+            "text": "$141.49 more delivered than #1"
+          },
+          {
+            "code": "FREE_RETURNS",
+            "text": "Free returns"
+          }
+        ]
+      }
+    ],
     "excluded": []
   },
   "history": {

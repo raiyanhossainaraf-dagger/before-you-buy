@@ -31,7 +31,11 @@ for (const file of files) {
       (l: { listingId: string }) => l.listingId === data.ranking.top[0]?.listingId,
     );
     const derived = alt && top1 ? deriveCheaperAlternative(top1, alt) : null;
-    if (derived) Object.assign(data.ranking.cheaperAlternative, derived);
+    if (derived) {
+      Object.assign(data.ranking.cheaperAlternative, derived);
+    } else {
+      delete data.ranking.cheaperAlternative;
+    }
   }
 
   await writeFile(path, `${JSON.stringify(data, null, 2)}\n`, 'utf8');

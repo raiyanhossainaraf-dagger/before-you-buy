@@ -104,4 +104,14 @@ describe('deriveCheaperAlternative', () => {
       reasons: [{ code: 'CHEAPER_CONDITION_TRADEOFF', text: '$50.00 less than the top pick, but renewed' }],
     });
   });
+
+  it('returns null when the "alternative" is not actually cheaper (rule 4: never show a misleading number)', () => {
+    const top = { landedPrice: { minCents: 43441, maxCents: 43441, currency: 'USD' } };
+    const alt = {
+      condition: 'refurbished',
+      conditionDetail: 'Renewed',
+      landedPrice: { minCents: 44638, maxCents: 44638, currency: 'USD' },
+    };
+    expect(deriveCheaperAlternative(top, alt)).toBeNull();
+  });
 });

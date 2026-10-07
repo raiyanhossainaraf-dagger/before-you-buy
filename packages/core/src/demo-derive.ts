@@ -124,7 +124,11 @@ export function deriveRankingTop(listings: RawRecord[]): RawRecord[] {
   });
 }
 
-/** ipad-base.json's refurbished alternative: saving vs the new-condition #1 pick. */
+/**
+ * ipad-base.json's refurbished alternative: saving vs the new-condition #1
+ * pick. Returns null (no cheaper alternative to show) when the computed
+ * saving isn't positive — rule 4 forbids presenting a misleading number.
+ */
 export function deriveCheaperAlternative(
   topListing: RawRecord,
   altListing: RawRecord,
@@ -134,6 +138,7 @@ export function deriveCheaperAlternative(
   if (topMid === null || altMid === null) return null;
 
   const savingCents = roundHalfUp(topMid - altMid);
+  if (savingCents <= 0) return null;
   const condition = String(altListing.conditionDetail ?? altListing.condition ?? 'this condition').toLowerCase();
 
   return {
