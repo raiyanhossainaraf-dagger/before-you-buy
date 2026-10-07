@@ -124,8 +124,8 @@ flowchart LR
 - [ ] **M0.3** Live demo on three real products: a one-off capture script stores precomputed comparison JSON (landed cost, trust signals, short price history) in `apps/web/content/demo/`; render it with the real result-card components. Each demo shows "Sample captured on {date}". **No affiliate links in the demo.**
 - [x] **M0.4** Waitlist: email form with Turnstile → `waitlist_signups` (with `consent_text_version`, source, UTM) → double opt-in confirmation email via Resend.
 - [x] **M0.5** Pre-orders: Stripe Checkout one-time payment per DECIDE-15 default; success/cancel pages; webhook → `preorders` (idempotent); refund policy page.
-- [ ] **M0.6** Legal pages: Privacy Policy, Terms, Pre-order terms, affiliate disclosure placeholder — drafts marked "pending legal review" (LEGAL-08/09/10).
-- [ ] **M0.7** Analytics: PostHog (pageviews, `waitlist_signed_up`, `preorder_started`, `preorder_paid`, `demo_card_opened`), UTM capture; Gate 0 dashboard.
+- [x] **M0.6** Legal pages: Privacy Policy, Terms, Pre-order terms, affiliate disclosure placeholder — drafts marked "pending legal review" (LEGAL-08/09/10).
+- [x] **M0.7** Analytics: PostHog (pageviews, `waitlist_signed_up`, `preorder_started`, `preorder_paid`, `demo_card_opened`), UTM capture; Gate 0 dashboard.
 - [ ] **M0.8** Deploy: Vercel project, Neon production database, domain, Resend sending domain with SPF/DKIM/DMARC; basic security headers.
 - [ ] **M0.9** Run the test (Show HN, r/SideProject, 30 DMs). After 2 weeks, record results and the proceed/reconsider decision as a `DEC-*` entry.
 

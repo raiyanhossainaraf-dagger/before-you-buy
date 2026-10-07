@@ -93,9 +93,34 @@ Plan file: `C:\Users\ARAF\.claude\plans\vast-floating-lollipop.md` (full task br
 - `pnpm lint && pnpm typecheck && pnpm test && pnpm test:integration` all pass (104 unit tests, 11 integration); `pnpm --filter @byb/web build && pnpm test:e2e` passes (19 e2e tests).
 - DEC-037 records the design choices (payments lib location, mock signing secret reuse, Stripe refund scope, refund script keying on row id).
 
+**Guard — mock payments provider is local-only.** Committed as `dcd40a1 fix(config): restrict mock payments provider to APP_ENV=local (M0.5)`, pushed.
+
+- `packages/config/src/server.ts`'s `serverEnvSchema` now fails validation if `PAYMENTS_PROVIDER=mock` and `APP_ENV` isn't `local` — the mock provider and `/checkout/mock` have no real money behind them and must never run outside local dev. `/checkout/mock`'s page and `/api/payments/mock-pay`'s route each add an explicit `isLocal()` 404 check too (defense in depth, independent of config validation).
+- Tests: `packages/config/src/__tests__/server.test.ts` — rejects `mock`+non-local, allows `mock`+local, and `isLocal()` itself is true only when `APP_ENV=local`.
+
+**M0.6 — Legal pages.** Committed as `7a56ead feat(web): legal page drafts (M0.6)`, pushed.
+
+- `/privacy`, `/terms`, `/affiliate-disclosure`, `/pre-order-terms` now hold real draft content instead of the generic `LegalPlaceholder`, each behind a shared `LegalDraftBanner` ("Draft — pending legal review").
+- `/privacy` lists only what the code demonstrably collects today — read from the actual code paths, not invented: email + consent version + source/UTM/referrer (`waitlist_signups`), pre-order email/amount/offer/status (`preorders`), Turnstile token + IP sent to Cloudflare for verification (not stored; SEC-30), and anonymous analytics events (no email/IP). States plainly that we set no cookies ourselves yet (the ZIP/anon cookies are M1+, not described until they exist) and that applicable privacy law, retention periods, and a complaints process are still pending (LEGAL-08).
+- `/terms` covers site use, links to `/pre-order-terms` for pre-order-specific terms, no-guarantee-on-third-party-prices, limitation of liability, and a placeholder governing law (LEGAL-09).
+- `/affiliate-disclosure` copies UI §9.3's standard blocks verbatim and states no affiliate links are live yet (LEGAL-05).
+- New `LEGAL_ENTITY` placeholder (`packages/config/src/app.ts`): name, address, contact email, governing law — all bracketed placeholders until the entity is incorporated and legal review sets real values.
+- `/pre-order-terms` (already real content from M0.5) now reuses the same `LegalDraftBanner` instead of its own inline banner.
+- Tests: `e2e/legal.spec.ts` — every draft page shows the banner, privacy/affiliate content assertions, axe at 375px.
+
+**M0.7 — Analytics + Gate 0 dashboard.** Committed as `8b60eff feat(web): analytics + gate 0 dashboard (M0.7)`, pushed.
+
+- `packages/schemas/src/analytics.ts` gained `page_view` (`path`) and `preorder_refunded` (`amountCents`), completing the M0.7 event set alongside the M0.4/M0.5 events already wired (`waitlist_signed_up`, `waitlist_confirmed`, `preorder_started`, `preorder_paid`, `demo_card_opened`).
+- New call sites: `PageViewTracker` (client component mounted in `RootLayout`, fires on every path change via `usePathname`); `demo-picker.tsx` fires `demo_card_opened` when a demo result card is clicked; `scripts/preorder-refund.tsx` fires `preorder_refunded` after a successful refund.
+- `apps/web/lib/analytics.test.ts`: new test asserts an event payload carrying `email` or `ip` is rejected by the strict schema (SEC-51 / TR-ANL-05) — the console adapter itself is unchanged (still M0.4's `track()`; PostHog transport is still ponytail debt for a later milestone, not built this task since `ANALYTICS_TRANSPORT=console` is all M0 needs).
+- `/admin/gate0` (new, local-only — 404 outside `APP_ENV=local`, `export const dynamic = 'force-dynamic'` so live counts and the APP_ENV gate are never baked into a static build): signups (total/confirmed/by source/by day — new `waitlistRepo.signupsByDay()`), pre-orders (paid/refunded via `preorderRepo.countPreorders()`), signup→pre-order conversion, and the hand-logged "when does it ship" replies from `apps/web/content/gate0-manual.json` (new `gate0ManualRepliesSchema` in `packages/schemas`; the file starts empty — no outreach has run yet, M0.9 is what fills it).
+- New pure `gate0Status()` helper (`packages/core`): `proceed` / `reconsider` / `not_enough_data` against the PRD §12.1 thresholds (signups 100+/under 30, "when does it ship" 10+/under 3, pre-orders 10+/0), unit-tested.
+- Tests: `packages/core/src/__tests__/gate0-status.test.ts`; `packages/schemas/src/__tests__/schemas.test.ts` gained `gate0ManualRepliesSchema` cases; `packages/db/src/__tests__/waitlist.integration.test.ts` gained a `signupsByDay` case; `e2e/gate0-dashboard.spec.ts` — page loads locally and shows all three sections.
+- `pnpm lint && pnpm typecheck && pnpm test && pnpm test:integration` all pass (107 unit tests, 8 integration); `pnpm --filter @byb/web build && pnpm test:e2e` passes (27 e2e tests).
+
 ## Not started
 
-M0.6 (legal pages) through M0.9 (test kit) — see the plan file for the full breakdown, the font/demo-data/M0.9 decisions already made with the user, and the verification table. M0.8 (deploy) stays deferred per the original scope.
+M0.8 (deploy, deferred per the original scope) and M0.9 (run the test — Show HN, r/SideProject, 30 DMs; record results after 2 weeks) — see the plan file for the full breakdown and verification table.
 
 ## Commands to pick this back up
 
@@ -117,4 +142,4 @@ pnpm --filter @byb/web build && pnpm test:e2e   # e2e needs a production build f
 
 ## Next step
 
-M0.5 is fully done: mock checkout + webhook + idempotent `preorders` row + receipt email + refund script working end to end (verified via Playwright and manually), unit/integration/e2e all green. Next up is M0.6 (legal pages). Per the user's standing instruction, do not start new M0 tasks until told to.
+M0.6 and M0.7 are fully done (see above). Next up is M0.9 (run the test) — M0.8 (deploy) stays deferred per the original scope. Per the user's standing instruction, do not start new M0 tasks until told to.
