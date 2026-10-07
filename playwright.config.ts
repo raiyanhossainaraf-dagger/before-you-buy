@@ -4,6 +4,8 @@ export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
+  // Flaky locally with the default auto-detected worker count; keep the CI default.
+  workers: process.env.CI ? undefined : 1,
   reporter: process.env.CI ? 'github' : 'list',
   use: {
     baseURL: 'http://localhost:3000',

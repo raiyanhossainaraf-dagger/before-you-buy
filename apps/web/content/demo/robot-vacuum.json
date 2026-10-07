@@ -14,18 +14,46 @@
       "platform": "amazon",
       "title": "TODO",
       "condition": "new",
-      "seller": { "name": "TODO", "isRetailer": true },
-      "warranty": { "months": "TODO", "provider": "manufacturer" },
-      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "seller": {
+        "name": "TODO",
+        "isRetailer": true
+      },
+      "warranty": {
+        "months": "TODO",
+        "provider": "manufacturer"
+      },
+      "returns": {
+        "windowDays": "TODO",
+        "freeReturns": "TODO"
+      },
       "inStock": true,
-      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
-      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
-      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
-      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
-      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "match": {
+        "confidence": 1,
+        "variant": "exact",
+        "method": "mpn"
+      },
+      "listedPrice": {
+        "amountCents": "TODO",
+        "currency": "USD"
+      },
+      "shippingCost": {
+        "amountCents": "TODO",
+        "currency": "USD"
+      },
+      "estimatedTax": {
+        "amountCents": "TODO",
+        "currency": "USD"
+      },
+      "landedPrice": {
+        "minCents": "TODO",
+        "maxCents": "TODO",
+        "currency": "USD"
+      },
       "landedPriceComplete": true,
       "uncertainComponents": [],
-      "priceVerification": { "status": "not_required" },
+      "priceVerification": {
+        "status": "not_required"
+      },
       "reviewAuthenticity": {
         "score": 70,
         "band": "consistent",
@@ -44,25 +72,55 @@
         "illustrative": true
       },
       "checkedAt": "TODO",
-      "affiliate": { "isAffiliate": false }
+      "affiliate": {
+        "isAffiliate": false
+      }
     },
     {
       "listingId": "robot-vacuum-ebay",
       "platform": "ebay",
       "title": "TODO",
       "condition": "new",
-      "seller": { "name": "TODO", "isRetailer": "TODO" },
-      "warranty": { "months": "TODO", "provider": "seller" },
-      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "seller": {
+        "name": "TODO",
+        "isRetailer": "TODO"
+      },
+      "warranty": {
+        "months": "TODO",
+        "provider": "seller"
+      },
+      "returns": {
+        "windowDays": "TODO",
+        "freeReturns": "TODO"
+      },
       "inStock": true,
-      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
-      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
-      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
-      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
-      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "match": {
+        "confidence": 1,
+        "variant": "exact",
+        "method": "mpn"
+      },
+      "listedPrice": {
+        "amountCents": "TODO",
+        "currency": "USD"
+      },
+      "shippingCost": {
+        "amountCents": "TODO",
+        "currency": "USD"
+      },
+      "estimatedTax": {
+        "amountCents": "TODO",
+        "currency": "USD"
+      },
+      "landedPrice": {
+        "minCents": "TODO",
+        "maxCents": "TODO",
+        "currency": "USD"
+      },
       "landedPriceComplete": true,
       "uncertainComponents": [],
-      "priceVerification": { "status": "not_required" },
+      "priceVerification": {
+        "status": "not_required"
+      },
       "reviewAuthenticity": {
         "score": 58,
         "band": "some_concerns",
@@ -81,26 +139,59 @@
         "illustrative": true
       },
       "checkedAt": "TODO",
-      "attribution": { "text": "From eBay", "logo": "ebay" },
-      "affiliate": { "isAffiliate": false }
+      "attribution": {
+        "text": "From eBay",
+        "logo": "ebay"
+      },
+      "affiliate": {
+        "isAffiliate": false
+      }
     },
     {
       "listingId": "robot-vacuum-bestbuy",
       "platform": "bestbuy",
       "title": "TODO",
       "condition": "new",
-      "seller": { "name": "Best Buy", "isRetailer": true },
-      "warranty": { "months": "TODO", "provider": "manufacturer" },
-      "returns": { "windowDays": "TODO", "freeReturns": "TODO" },
+      "seller": {
+        "name": "Best Buy",
+        "isRetailer": true
+      },
+      "warranty": {
+        "months": "TODO",
+        "provider": "manufacturer"
+      },
+      "returns": {
+        "windowDays": "TODO",
+        "freeReturns": "TODO"
+      },
       "inStock": true,
-      "match": { "confidence": 1, "variant": "exact", "method": "mpn" },
-      "listedPrice": { "amountCents": "TODO", "currency": "USD" },
-      "shippingCost": { "amountCents": "TODO", "currency": "USD" },
-      "estimatedTax": { "amountCents": "TODO", "currency": "USD" },
-      "landedPrice": { "minCents": "TODO", "maxCents": "TODO", "currency": "USD" },
+      "match": {
+        "confidence": 1,
+        "variant": "exact",
+        "method": "mpn"
+      },
+      "listedPrice": {
+        "amountCents": "TODO",
+        "currency": "USD"
+      },
+      "shippingCost": {
+        "amountCents": "TODO",
+        "currency": "USD"
+      },
+      "estimatedTax": {
+        "amountCents": "TODO",
+        "currency": "USD"
+      },
+      "landedPrice": {
+        "minCents": "TODO",
+        "maxCents": "TODO",
+        "currency": "USD"
+      },
       "landedPriceComplete": true,
       "uncertainComponents": [],
-      "priceVerification": { "status": "not_required" },
+      "priceVerification": {
+        "status": "not_required"
+      },
       "reviewAuthenticity": {
         "score": 72,
         "band": "consistent",
@@ -119,37 +210,27 @@
         "illustrative": true
       },
       "checkedAt": "TODO",
-      "attribution": { "text": "From Best Buy", "logo": "bestbuy" },
-      "affiliate": { "isAffiliate": false }
+      "attribution": {
+        "text": "From Best Buy",
+        "logo": "bestbuy"
+      },
+      "affiliate": {
+        "isAffiliate": false
+      }
     }
   ],
   "ranking": {
     "conditionScope": "new",
-    "top": [
-      {
-        "listingId": "robot-vacuum-amazon",
-        "rank": 1,
-        "label": "Lowest delivered price",
-        "reasons": [{ "code": "TODO", "text": "TODO" }]
-      },
-      {
-        "listingId": "robot-vacuum-bestbuy",
-        "rank": 2,
-        "label": "Best returns",
-        "reasons": [{ "code": "TODO", "text": "TODO" }]
-      },
-      {
-        "listingId": "robot-vacuum-ebay",
-        "rank": 3,
-        "label": "Other option we checked",
-        "reasons": [{ "code": "TODO", "text": "TODO" }]
-      }
-    ],
+    "top": [],
     "excluded": []
   },
   "history": {
     "basis": "listed_new",
-    "platforms": ["amazon", "ebay", "bestbuy"],
+    "platforms": [
+      "amazon",
+      "ebay",
+      "bestbuy"
+    ],
     "minCents": 24999,
     "maxCents": 44999,
     "medianCents": 32999,

@@ -23,6 +23,7 @@
     "services:down": "docker compose -f infra/docker-compose.yml down",
     "env:local": "node scripts/env-local.mjs",
     "demo:capture": "tsx scripts/capture-demo.ts",
+    "demo:derive": "tsx scripts/derive-demo.ts",
     "demo:validate": "tsx scripts/validate-demo.ts"
   },
   "devDependencies": {
