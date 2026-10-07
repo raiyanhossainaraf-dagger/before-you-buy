@@ -3,7 +3,7 @@ import { eq } from 'drizzle-orm';
 import { afterAll, describe, expect, it } from 'vitest';
 import { db } from '../client';
 import { waitlistSignups } from '../schema';
-import { confirmSignup, findSignup, upsertSignup } from '../repositories/waitlist';
+import { confirmSignup, findSignup, signupsByDay, upsertSignup } from '../repositories/waitlist';
 
 /** SCHEMA §12, against the real Docker Postgres (`pnpm services:up` first). */
 describe('waitlist repository (M0.4 integration)', () => {
@@ -46,6 +46,18 @@ describe('waitlist repository (M0.4 integration)', () => {
 
     const row = await findSignup(id);
     expect(row?.confirmedAt).not.toBeNull();
+  });
+
+  it('counts signups by day (M0.7 Gate 0 dashboard)', async () => {
+    const email = freshEmail();
+    await upsertSignup({ email, source: 'direct', consentTextVersion: 'v1' });
+
+    const today = new Date().toISOString().slice(0, 10);
+    const rows = await signupsByDay();
+    const todayRow = rows.find((r) => r.day === today);
+
+    expect(todayRow).toBeDefined();
+    expect(todayRow!.total).toBeGreaterThanOrEqual(1);
   });
 
   it('is case-insensitive on email (citext)', async () => {

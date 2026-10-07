@@ -71,6 +71,11 @@ export const analyticsEventSchema = z.discriminatedUnion('name', [
     name: z.literal('demo_card_opened'),
     props: z.strictObject({ slug: z.string().max(60), platform: platformSchema }),
   }),
+  z.strictObject({ name: z.literal('page_view'), props: z.strictObject({ path: z.string().max(200) }) }),
+  z.strictObject({
+    name: z.literal('preorder_refunded'),
+    props: z.strictObject({ amountCents: z.int().min(0) }),
+  }),
 ]);
 export type AnalyticsEvent = z.infer<typeof analyticsEventSchema>;
 export type AnalyticsEventName = AnalyticsEvent['name'];

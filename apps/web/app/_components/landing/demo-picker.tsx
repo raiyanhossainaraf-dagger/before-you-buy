@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { ResultCard } from '@byb/ui';
 import type { DemoComparison } from '@byb/schemas';
+import { track } from '@/lib/analytics';
 
 const capturedDate = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' });
 
@@ -56,17 +57,26 @@ export function DemoPicker({ comparisons }: { comparisons: DemoComparison[] }) {
           const listing = byId.get(entry.listingId);
           if (!listing) return null;
           return (
-            <ResultCard
+            <div
               key={entry.listingId}
-              listing={listing}
-              rank={entry.rank}
-              label={entry.label}
-              reasons={entry.reasons}
-              zip={active.zip}
-              history={active.history}
-              illustrativeHistory={active.history.illustrative}
-              illustrativeTrust={listing.reviewAuthenticity.illustrative}
-            />
+              onClick={() =>
+                track({
+                  name: 'demo_card_opened',
+                  props: { slug: active.slug, platform: listing.platform },
+                })
+              }
+            >
+              <ResultCard
+                listing={listing}
+                rank={entry.rank}
+                label={entry.label}
+                reasons={entry.reasons}
+                zip={active.zip}
+                history={active.history}
+                illustrativeHistory={active.history.illustrative}
+                illustrativeTrust={listing.reviewAuthenticity.illustrative}
+              />
+            </div>
           );
         })}
       </div>

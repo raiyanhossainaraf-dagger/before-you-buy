@@ -23,6 +23,7 @@ const { preorderRepo } = await import('@byb/db');
 const { sendEmail } = await import('@byb/email');
 const { PreorderRefunded } = await import('@byb/email/templates/preorder-refunded');
 const { SENDER_IDENTITY } = await import('@byb/config');
+const { track } = await import('../apps/web/lib/analytics');
 
 const refunded = await preorderRepo.refundPreorderById(id, new Date());
 if (!refunded) {
@@ -35,6 +36,8 @@ await sendEmail({
   subject: 'Your Before You Buy pre-order was refunded',
   react: <PreorderRefunded amountCents={refunded.amountCents} senderAddress={SENDER_IDENTITY} />,
 });
+
+track({ name: 'preorder_refunded', props: { amountCents: refunded.amountCents } });
 
 console.log(`Refunded ${id} (${refunded.email}) and sent a confirmation email.`);
 

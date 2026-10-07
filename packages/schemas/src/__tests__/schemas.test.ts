@@ -4,6 +4,7 @@ import { resultListingSchema } from '../listing';
 import { waitlistSignupRequestSchema } from '../waitlist';
 import { paymentEventSchema } from '../preorder';
 import { analyticsEventSchema } from '../analytics';
+import { gate0ManualRepliesSchema } from '../gate0';
 
 describe('TR-CONV-02 money', () => {
   it('rejects a float amount', () => {
@@ -100,5 +101,21 @@ describe('TR-ANL-02 analytics events', () => {
     expect(
       analyticsEventSchema.safeParse({ name: 'something_made_up', props: {} }).success,
     ).toBe(false);
+  });
+});
+
+describe('PRD §12.1 gate0ManualRepliesSchema', () => {
+  it('accepts a hand-logged "when does it ship" reply', () => {
+    const result = gate0ManualRepliesSchema.safeParse([
+      { date: '2026-10-08', channel: 'dm', note: 'Asked when they could get early access.' },
+    ]);
+    expect(result.success).toBe(true);
+  });
+
+  it('rejects an unknown field', () => {
+    const result = gate0ManualRepliesSchema.safeParse([
+      { date: '2026-10-08', channel: 'dm', note: 'x', email: 'leaked@example.com' },
+    ]);
+    expect(result.success).toBe(false);
   });
 });

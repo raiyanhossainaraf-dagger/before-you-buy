@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import { POSITIONING_CLAIM } from '@byb/config';
+import { PageViewTracker } from './_components/page-view-tracker';
 import './globals.css';
 
 /**
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
+        <PageViewTracker />
         {children}
       </body>
     </html>

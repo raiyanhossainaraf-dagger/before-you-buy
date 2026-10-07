@@ -96,3 +96,17 @@ export async function countSignups(): Promise<{ total: number; confirmed: number
 
   return { total: totals?.total ?? 0, confirmed: confirmed?.total ?? 0 };
 }
+
+/** M0.7 dashboard: signups per calendar day (UTC), oldest first. */
+export async function signupsByDay(): Promise<Array<{ day: string; total: number }>> {
+  const rows = await db()
+    .select({
+      day: sql<string>`to_char(${waitlistSignups.createdAt}, 'YYYY-MM-DD')`,
+      total: count(),
+    })
+    .from(waitlistSignups)
+    .groupBy(sql`to_char(${waitlistSignups.createdAt}, 'YYYY-MM-DD')`)
+    .orderBy(sql`to_char(${waitlistSignups.createdAt}, 'YYYY-MM-DD')`);
+
+  return rows;
+}

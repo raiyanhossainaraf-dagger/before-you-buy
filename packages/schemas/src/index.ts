@@ -4,3 +4,4 @@ export * from './demo';
 export * from './waitlist';
 export * from './preorder';
 export * from './analytics';
+export * from './gate0';
