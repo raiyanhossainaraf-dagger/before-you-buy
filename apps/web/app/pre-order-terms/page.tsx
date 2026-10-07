@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { PREORDER_OFFER } from '@byb/config';
+import { LegalDraftBanner } from '../_components/legal-draft-banner';
 
 export const metadata: Metadata = { title: 'Pre-order Terms' };
 
@@ -14,9 +15,7 @@ export default function PreorderTermsPage() {
   return (
     <main id="main" className="mx-auto max-w-2xl px-4 py-16">
       <h1 className="text-3xl font-semibold tracking-tight">Pre-order Terms</h1>
-      <p className="mt-2 text-sm font-medium text-amber-700">
-        Draft — pending legal review. Published before launch.
-      </p>
+      <LegalDraftBanner />
 
       <p className="mt-6 text-sm text-muted-foreground">
         {PREORDER_OFFER.title}: a one-time payment of {(PREORDER_OFFER.amountCents / 100).toLocaleString(

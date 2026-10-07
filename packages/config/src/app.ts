@@ -40,6 +40,19 @@ export const CONSENT = {
  */
 export const SENDER_IDENTITY = 'Before You Buy (postal address pending legal review)';
 
+/**
+ * LEGAL-08/09: the legal entity behind Before You Buy, named on the Privacy
+ * Policy and Terms of Service. Placeholders until the entity is incorporated
+ * and legal review sets the real values — M0.6 content is explicitly marked
+ * draft so this is never read as final.
+ */
+export const LEGAL_ENTITY = {
+  name: '[Legal entity name pending — e.g. Before You Buy Pty Ltd]',
+  address: '[Postal address pending legal review]',
+  contactEmail: 'privacy@beforeyoubuy.local',
+  governingLaw: '[Governing law pending legal review]',
+} as const;
+
 /** PRD §8. Shown as a preview at Gate 0; billing itself is v4.5 (M18). */
 export const PLANS = [
   {
