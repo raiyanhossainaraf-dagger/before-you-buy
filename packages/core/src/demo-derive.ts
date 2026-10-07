@@ -73,54 +73,129 @@ function dollars(cents: number): string {
   return (Math.abs(cents) / 100).toFixed(2);
 }
 
-const RANK_LABELS = ['Lowest delivered price', 'Best returns', 'Other option we checked'];
+/** Zero or missing both mean "no returns" for ranking purposes — never a favorable value. */
+function returnsDaysOrZero(listing: RawRecord): number {
+  const windowDays = (listing.returns as { windowDays?: unknown } | undefined)?.windowDays;
+  return isNumber(windowDays) && windowDays > 0 ? windowDays : 0;
+}
+
+function warrantyMonthsOrZero(listing: RawRecord): number {
+  const months = (listing.warranty as { months?: unknown } | undefined)?.months;
+  return isNumber(months) && months > 0 ? months : 0;
+}
+
+/** Official retailers (`isRetailer: true`) sort ahead of marketplace sellers as a last-resort tiebreaker. */
+function sellerRetailerRank(listing: RawRecord): number {
+  return (listing.seller as { isRetailer?: unknown } | undefined)?.isRetailer === true ? 0 : 1;
+}
+
+function sellerName(listing: RawRecord): string {
+  const name = (listing.seller as { name?: unknown } | undefined)?.name;
+  return typeof name === 'string' ? name : '';
+}
+
+/** Ties are same price or within $3 / 2%, whichever is larger — never a "$0.00 difference" claim. */
+function isLandedPriceTie(aMid: number, bMid: number): boolean {
+  const threshold = Math.max(300, Math.round(0.02 * Math.min(aMid, bMid)));
+  return Math.abs(aMid - bMid) <= threshold;
+}
+
+/** price, then (on a tie) returns, then warranty, then seller — fully deterministic. */
+function compareCandidates(a: RawRecord, b: RawRecord): number {
+  const aMid = landedMid(a)!;
+  const bMid = landedMid(b)!;
+  if (!isLandedPriceTie(aMid, bMid)) return aMid - bMid;
+
+  const returnsDiff = returnsDaysOrZero(b) - returnsDaysOrZero(a);
+  if (returnsDiff !== 0) return returnsDiff;
+
+  const warrantyDiff = warrantyMonthsOrZero(b) - warrantyMonthsOrZero(a);
+  if (warrantyDiff !== 0) return warrantyDiff;
+
+  const retailerDiff = sellerRetailerRank(a) - sellerRetailerRank(b);
+  if (retailerDiff !== 0) return retailerDiff;
+
+  return sellerName(a).localeCompare(sellerName(b));
+}
+
+function returnsPhrase(days: number, withWord: boolean): string {
+  if (days <= 0) return 'No returns';
+  return withWord ? `${days}-day returns` : `${days}-day`;
+}
+
+/** "No returns" replaces any zero side — never "0-day" (demo:validate-adjacent honesty rule). */
+export function formatReturnsComparison(subjectDays: number, otherDays: number): string {
+  return `${returnsPhrase(subjectDays, true)} vs ${returnsPhrase(otherDays, false)}`;
+}
+
+const OTHER_OPTION_LABEL = 'Other option we checked';
 
 /**
  * Orders the new-condition listings with a known landed price by that price
- * and writes deterministic reasons. Never reads affiliate/commission data
- * (rule 6: ranking is affiliate-blind).
+ * (ties broken by returns, then warranty, then seller) and writes
+ * deterministic reasons. Never reads affiliate/commission data (rule 6:
+ * ranking is affiliate-blind). "Best returns" only ever goes to the listing
+ * that genuinely has the longest return window (and it must be > 0 days) —
+ * never a fixed position.
  */
 export function deriveRankingTop(listings: RawRecord[]): RawRecord[] {
   const candidates = listings
     .filter((listing) => listing.condition === 'new' && landedMid(listing) !== null)
-    .sort((a, b) => landedMid(a)! - landedMid(b)!)
+    .sort(compareCandidates)
     .slice(0, 3);
 
   if (candidates.length === 0) return [];
   const first = candidates[0]!;
-  const second = candidates[1];
+  const firstReturnsDays = returnsDaysOrZero(first);
+
+  const others = candidates.slice(1);
+  const bestOthersReturnsDays = others.length > 0 ? Math.max(...others.map(returnsDaysOrZero)) : 0;
+  // "Best returns" must genuinely beat the #1 pick, not merely tie it — a tie says nothing distinctive.
+  const bestReturnsId =
+    bestOthersReturnsDays > firstReturnsDays && bestOthersReturnsDays > 0
+      ? others.find((listing) => returnsDaysOrZero(listing) === bestOthersReturnsDays)?.listingId
+      : undefined;
 
   return candidates.map((listing, i) => {
     const rank = i + 1;
     const mid = landedMid(listing)!;
     const reasons: Array<{ code: string; text: string }> = [];
 
-    if (rank === 1 && second) {
-      reasons.push({
-        code: 'LOWER_LANDED_PRICE',
-        text: `$${dollars(landedMid(second)! - mid)} less delivered than #2`,
-      });
+    if (i === 0) {
+      const second = candidates[1];
+      if (second) {
+        const secondMid = landedMid(second)!;
+        reasons.push(
+          isLandedPriceTie(mid, secondMid)
+            ? { code: 'SAME_LANDED_PRICE', text: 'Same delivered price as #2' }
+            : { code: 'LOWER_LANDED_PRICE', text: `$${dollars(secondMid - mid)} less delivered than #2` },
+        );
+      }
+    } else {
+      const firstMid = landedMid(first)!;
+      reasons.push(
+        isLandedPriceTie(mid, firstMid)
+          ? { code: 'SAME_LANDED_PRICE', text: 'Same delivered price as #1' }
+          : { code: 'HIGHER_LANDED_PRICE', text: `$${dollars(mid - firstMid)} more delivered than #1` },
+      );
     }
-    if (rank > 1) {
+
+    if (listing.listingId === bestReturnsId) {
       reasons.push({
-        code: 'HIGHER_LANDED_PRICE',
-        text: `$${dollars(mid - landedMid(first)!)} more delivered than #1`,
+        code: 'RETURNS_WINDOW',
+        text: formatReturnsComparison(returnsDaysOrZero(listing), returnsDaysOrZero(first)),
       });
     }
 
-    const returns = listing.returns as { windowDays?: unknown; freeReturns?: unknown } | undefined;
-    const firstReturns = first.returns as { windowDays?: unknown } | undefined;
-    if (rank === 2 && isNumber(returns?.windowDays) && isNumber(firstReturns?.windowDays)) {
-      reasons.push({
-        code: 'RETURNS_WINDOW',
-        text: `${returns.windowDays}-day returns vs ${firstReturns.windowDays}`,
-      });
-    }
-    if (returns?.freeReturns === true) {
+    const freeReturns = (listing.returns as { freeReturns?: unknown } | undefined)?.freeReturns;
+    if (freeReturns === true) {
       reasons.push({ code: 'FREE_RETURNS', text: 'Free returns' });
     }
 
-    return { listingId: listing.listingId, rank, label: RANK_LABELS[i] ?? 'Other option we checked', reasons };
+    const label =
+      i === 0 ? 'Lowest delivered price' : listing.listingId === bestReturnsId ? 'Best returns' : OTHER_OPTION_LABEL;
+
+    return { listingId: listing.listingId, rank, label, reasons };
   });
 }
 

@@ -31,6 +31,19 @@ export const demoComparisonSchema = z.strictObject({
     name: z.string().min(1).max(200),
     brand: z.string().min(1).max(80),
     category: z.string().min(1).max(80),
+    /**
+     * M0.3: a neutral illustration by default (LEGAL-16 forbids retailer
+     * listing images). `source`/`license` let a manufacturer press image
+     * replace the illustration later with its provenance on record.
+     */
+    image: z
+      .strictObject({
+        src: z.string().min(1).max(300),
+        alt: z.string().min(1).max(200),
+        source: z.string().min(1).max(120),
+        license: z.string().min(1).max(120),
+      })
+      .optional(),
   }),
   zip: z.string().regex(/^\d{5}$/, 'zip is five digits'),
   listings: z.array(demoListingSchema).min(2).max(6),

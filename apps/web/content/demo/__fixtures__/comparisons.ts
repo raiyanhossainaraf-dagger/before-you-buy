@@ -46,7 +46,7 @@ function listing(overrides: {
   };
 }
 
-function comparison(slug: string, name: string): DemoComparison {
+function comparison(slug: string, name: string, imageSrc: string, imageAlt: string): DemoComparison {
   const listings = [
     listing({ listingId: `${slug}-amazon`, platform: 'amazon', listedCents: 29999, shippingCents: 0, taxCents: 2642 }),
     listing({ listingId: `${slug}-ebay`, platform: 'ebay', listedCents: 30999, shippingCents: 500, taxCents: 2772 }),
@@ -57,7 +57,12 @@ function comparison(slug: string, name: string): DemoComparison {
     slug,
     capturedAt: '2026-10-01T00:00:00.000Z',
     capturedBy: 'fixture',
-    product: { name, brand: 'Example', category: 'electronics' },
+    product: {
+      name,
+      brand: 'Example',
+      category: 'electronics',
+      image: { src: imageSrc, alt: imageAlt, source: 'Before You Buy illustration', license: 'Original artwork, CC0' },
+    },
     zip: '10001',
     listings,
     ranking: {
@@ -85,7 +90,7 @@ function comparison(slug: string, name: string): DemoComparison {
 }
 
 export const demoFixtures: DemoComparison[] = [
-  comparison('fixture-one', 'Example Headphones'),
-  comparison('fixture-two', 'Example Robot Vacuum'),
-  comparison('fixture-three', 'Example Tablet'),
+  comparison('fixture-one', 'Example Headphones', '/demo/headphones.svg', 'Illustration of over-ear headphones'),
+  comparison('fixture-two', 'Example Robot Vacuum', '/demo/robot-vacuum.svg', 'Illustration of a robot vacuum'),
+  comparison('fixture-three', 'Example Tablet', '/demo/tablet.svg', 'Illustration of a tablet'),
 ];

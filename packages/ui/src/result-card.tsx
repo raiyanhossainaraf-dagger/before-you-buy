@@ -7,7 +7,7 @@ import { ReasonList } from './reason-list';
 import { TrustBadge } from './trust-badge';
 import { HistoryIndicator } from './history-indicator';
 
-/** UI §7.3 Result card — all states, no retailer image (LEGAL-16: neutral placeholder only). */
+/** UI §7.3 Result card — all states, no retailer image (LEGAL-16); the product image lives in the shared header above the cards, not per-card. */
 export function ResultCard({
   listing,
   rank,
@@ -49,19 +49,16 @@ export function ResultCard({
         </p>
       ) : null}
 
-      <div className="mt-1 flex items-center gap-3">
-        <div aria-hidden className="size-14 shrink-0 rounded-control bg-muted" />
-        <div>
-          <p className="text-xs text-muted-foreground">
-            {PLATFORM_LABELS[listing.platform]} ·{' '}
-            <span className={cn('rounded-full px-1.5 py-0.5', conditionBadgeClass)}>
-              {CONDITION_LABELS[listing.condition]}
-              {listing.conditionDetail ? ` — ${listing.conditionDetail}` : ''}
-            </span>{' '}
-            · Sold by {listing.seller.name}
-          </p>
-          <h3 className="line-clamp-2 text-sm font-medium">{listing.title}</h3>
-        </div>
+      <div className="mt-1">
+        <p className="text-xs text-muted-foreground">
+          {PLATFORM_LABELS[listing.platform]} ·{' '}
+          <span className={cn('rounded-full px-1.5 py-0.5', conditionBadgeClass)}>
+            {CONDITION_LABELS[listing.condition]}
+            {listing.conditionDetail ? ` — ${listing.conditionDetail}` : ''}
+          </span>{' '}
+          · Sold by {listing.seller.name}
+        </p>
+        <h3 className="line-clamp-2 text-sm font-medium">{listing.title}</h3>
       </div>
 
       {isPossibleMatch ? (
@@ -80,7 +77,11 @@ export function ResultCard({
           <HistoryIndicator history={history} illustrative={illustrativeHistory} />
         </div>
         <p className="text-xs text-muted-foreground">
-          {listing.returns.windowDays !== null ? `${listing.returns.windowDays}-day returns` : 'Returns not stated'}
+          {listing.returns.windowDays === null
+            ? 'Returns not stated'
+            : listing.returns.windowDays === 0
+              ? 'No returns'
+              : `${listing.returns.windowDays}-day returns`}
           {' · '}
           {listing.warranty.months !== null
             ? `${listing.warranty.months}-month ${listing.warranty.provider} warranty`

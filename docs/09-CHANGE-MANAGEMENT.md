@@ -187,6 +187,7 @@ Format: **DEC-NNN — Title** · date · status (`accepted` / `superseded by DEC
 | DEC-032 | 2026-10-05 | Added `packages/core`, `email`, `config`, `observability`, `tooling/`, `infra/` to the repo layout | Pure domain logic and one config source | accepted |
 | DEC-033 | 2026-10-05 | Provider policy gains `historyAllowed`; eBay/Best Buy default `aiUseAllowed=false`, `historyAllowed=false` until LEGAL-03/04 | Terms may forbid AI use and price modelling | accepted |
 | DEC-034 | 2026-10-05 | Amazon affiliate links behind `amazon.affiliate-links`, default off until LEGAL-02 | Associates price-display rules vs scraped prices | accepted |
+| DEC-035 | 2026-10-07 | `demoComparisonSchema.product` gains an optional `image` (`src`, `alt`, `source`, `license`); M0.3 demo products ship with original neutral SVG illustrations, not retailer photos | LEGAL-16 forbids retailer listing images; `source`/`license` record provenance so a manufacturer press image can replace the illustration later without a silent swap | accepted |
 
 ### 7.1 Decision entry template
 
@@ -206,6 +207,7 @@ Format: **DEC-NNN — Title** · date · status (`accepted` / `superseded by DEC
 | Date | Docs | Version | Change |
 |---|---|---|---|
 | 2026-10-05 | All (`CLAUDE.md`, 01–09) | 1.0 | Initial repo documentation set created from PRD v4.0 and Architecture & Stack (Oct 4, 2026). Added editor's notes for the Amazon Creators API change, review register, milestone plan and decision log. |
+| 2026-10-07 | 07-UI-UX-DESIGN | 1.1 | M0.3 polish: documented the demo product-image header (DEC-035) and the ranking-reason honesty rules (ties, "Best returns" eligibility, "No returns" wording). |
 
 ---
 

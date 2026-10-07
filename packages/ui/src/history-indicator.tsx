@@ -23,9 +23,11 @@ export function HistoryIndicator({
   const { Icon, className } = BY_LABEL[label as keyof typeof BY_LABEL];
 
   return (
-    <span className={cn('inline-flex items-center gap-1.5', className)}>
-      <Icon aria-hidden className="size-4 shrink-0" />
-      <span>{label}</span>
+    <span className="flex flex-col items-start gap-0.5">
+      <span className={cn('inline-flex items-center gap-1.5 whitespace-nowrap', className)}>
+        <Icon aria-hidden className="size-4 shrink-0" />
+        <span>{label}</span>
+      </span>
       {illustrative ? <span className="text-xs text-muted-foreground">(Example analysis)</span> : null}
     </span>
   );

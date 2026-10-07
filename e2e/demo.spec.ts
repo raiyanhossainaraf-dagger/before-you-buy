@@ -35,6 +35,24 @@ test.describe('M0.3 demo picker', () => {
     }
   });
 
+  test('shows one product illustration per tab with real alt text, and never a "$0.00" or "0-day" ranking reason', async ({
+    page,
+  }) => {
+    await page.goto('/dev/demo-preview');
+    const tabs = page.getByRole('tab');
+
+    for (const tab of await tabs.all()) {
+      await tab.click();
+      const image = page.locator('[data-slot="demo-m0-3"] img');
+      await expect(image).toHaveCount(1);
+      await expect(image).toHaveAttribute('alt', /.+/);
+
+      const bodyText = await page.locator('[data-slot="demo-m0-3"]').innerText();
+      expect(bodyText).not.toContain('$0.00');
+      expect(bodyText).not.toMatch(/\b0-day\b/);
+    }
+  });
+
   test('axe reports no serious or critical violations at 375px', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto('/dev/demo-preview');

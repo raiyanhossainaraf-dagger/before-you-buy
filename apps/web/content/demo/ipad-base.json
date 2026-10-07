@@ -5,7 +5,13 @@
   "product": {
     "name": "Apple iPad 128GB Wi-Fi (current base model)",
     "brand": "Apple",
-    "category": "tablets"
+    "category": "tablets",
+    "image": {
+      "src": "/demo/tablet.svg",
+      "alt": "Illustration of a tablet",
+      "source": "Before You Buy illustration",
+      "license": "Original artwork, CC0"
+    }
   },
   "zip": "10001",
   "listings": [
@@ -299,8 +305,23 @@
         "label": "Lowest delivered price",
         "reasons": [
           {
-            "code": "LOWER_LANDED_PRICE",
-            "text": "$0.00 less delivered than #2"
+            "code": "SAME_LANDED_PRICE",
+            "text": "Same delivered price as #2"
+          },
+          {
+            "code": "FREE_RETURNS",
+            "text": "Free returns"
+          }
+        ]
+      },
+      {
+        "listingId": "ipad-base-bestbuy",
+        "rank": 2,
+        "label": "Other option we checked",
+        "reasons": [
+          {
+            "code": "SAME_LANDED_PRICE",
+            "text": "Same delivered price as #1"
           },
           {
             "code": "FREE_RETURNS",
@@ -310,31 +331,12 @@
       },
       {
         "listingId": "ipad-base-ebay",
-        "rank": 2,
-        "label": "Best returns",
-        "reasons": [
-          {
-            "code": "HIGHER_LANDED_PRICE",
-            "text": "$0.00 more delivered than #1"
-          },
-          {
-            "code": "RETURNS_WINDOW",
-            "text": "0-day returns vs 15"
-          }
-        ]
-      },
-      {
-        "listingId": "ipad-base-bestbuy",
         "rank": 3,
         "label": "Other option we checked",
         "reasons": [
           {
-            "code": "HIGHER_LANDED_PRICE",
-            "text": "$5.50 more delivered than #1"
-          },
-          {
-            "code": "FREE_RETURNS",
-            "text": "Free returns"
+            "code": "SAME_LANDED_PRICE",
+            "text": "Same delivered price as #1"
           }
         ]
       }

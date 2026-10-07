@@ -5,7 +5,13 @@
   "product": {
     "name": "Shark AI Ultra Robot Vacuum, AV2501S",
     "brand": "Shark",
-    "category": "robot vacuums"
+    "category": "robot vacuums",
+    "image": {
+      "src": "/demo/robot-vacuum.svg",
+      "alt": "Illustration of a robot vacuum",
+      "source": "Before You Buy illustration",
+      "license": "Original artwork, CC0"
+    }
   },
   "zip": "10001",
   "listings": [
@@ -240,15 +246,11 @@
       {
         "listingId": "robot-vacuum-ebay",
         "rank": 2,
-        "label": "Best returns",
+        "label": "Other option we checked",
         "reasons": [
           {
             "code": "HIGHER_LANDED_PRICE",
             "text": "$81.66 more delivered than #1"
-          },
-          {
-            "code": "RETURNS_WINDOW",
-            "text": "30-day returns vs 30"
           }
         ]
       },

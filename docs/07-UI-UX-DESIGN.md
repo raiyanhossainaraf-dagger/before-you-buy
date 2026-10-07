@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Version | 1.0 |
+| Version | 1.1 |
 | Design system | shadcn/ui (Base UI primitives) on Tailwind CSS v4, tokens in `@theme`, Lucide icons |
 | Accessibility target | WCAG 2.2 AA |
 | Related | [01-PRD §3, §5](01-PRD.md#5-consumer-web-requirements) · [02-ARCHITECTURE §12–13](02-ARCHITECTURE.md#13-frontend-and-design-system-summary) · [03-TECHNICAL-REQUIREMENTS](03-TECHNICAL-REQUIREMENTS.md) |
@@ -335,6 +335,10 @@ Four columns (Free, Starter, Growth, Scale) + Enterprise row, values from `packa
 ### 7.14 Gate 0 landing (M0)
 
 Hero (positioning claim), three questions, three demo comparisons (real result cards with "Sample captured on {date}"), email capture, pre-order card ($49 offer per DECIDE-15, "Fully refundable"), FAQ, legal footer.
+
+**Product image (M0.3):** one neutral illustration per demo product, shown once in a shared header above that product's three result cards — never per-card, and never a retailer listing photo (LEGAL-16). `next/image` with explicit `width`/`height` so the header doesn't shift layout on load. The result card itself carries no image. `demoComparisonSchema`'s `product.image` (`src`, `alt`, `source`, `license`) is optional so a comparison can still validate without one; `source`/`license` exist so a manufacturer press image can later replace the illustration with its provenance recorded, not just a bare URL.
+
+**Ranking-reason honesty (M0.3):** `packages/core`'s `deriveRankingTop` treats landed prices within $3 or 2% (whichever is larger) as a tie — the reason reads "Same delivered price as #N", never "$0.00 less/more". Exact or near ties are ordered by returns window, then warranty length, then seller (official retailer, then name) as a fully deterministic tiebreaker. The "Best returns" label only goes to a listing whose return window is both non-zero and strictly longer than the #1 pick's — a tie with #1, or a 0-day/no-returns window, never earns it. A 0-day or missing return window always reads as "No returns", never "0-day".
 
 ---
 

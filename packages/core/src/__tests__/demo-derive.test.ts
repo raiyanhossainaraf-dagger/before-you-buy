@@ -4,6 +4,7 @@ import {
   deriveEstimatedTaxCents,
   deriveListing,
   deriveRankingTop,
+  formatReturnsComparison,
 } from '../demo-derive';
 
 describe('deriveEstimatedTaxCents — NY ZIP 10001, 8.875% on price + shipping', () => {
@@ -52,12 +53,24 @@ describe('deriveListing', () => {
   });
 });
 
+describe('formatReturnsComparison', () => {
+  it('renders a zero-day side as "No returns", never "0-day"', () => {
+    expect(formatReturnsComparison(0, 30)).toBe('No returns vs 30-day');
+    expect(formatReturnsComparison(30, 0)).toBe('30-day returns vs No returns');
+  });
+
+  it('renders two non-zero sides as "{n}-day returns vs {n}-day"', () => {
+    expect(formatReturnsComparison(60, 30)).toBe('60-day returns vs 30-day');
+  });
+});
+
 describe('deriveRankingTop', () => {
   const listing = (id: string, landedCents: number, extra: Record<string, unknown> = {}) => ({
     listingId: id,
     condition: 'new',
     landedPrice: { minCents: landedCents, maxCents: landedCents, currency: 'USD' },
     returns: { windowDays: 30, freeReturns: false },
+    seller: { name: 'Seller', isRetailer: false },
     ...extra,
   });
 
@@ -74,7 +87,8 @@ describe('deriveRankingTop', () => {
       label: 'Lowest delivered price',
       reasons: [{ code: 'LOWER_LANDED_PRICE', text: '$20.00 less delivered than #2' }],
     });
-    expect(top[1]!.reasons).toContainEqual({ code: 'RETURNS_WINDOW', text: '60-day returns vs 30' });
+    expect(top[1]).toMatchObject({ label: 'Best returns' });
+    expect(top[1]!.reasons).toContainEqual({ code: 'RETURNS_WINDOW', text: '60-day returns vs 30-day' });
     expect(top[2]).toMatchObject({
       rank: 3,
       label: 'Other option we checked',
@@ -88,6 +102,79 @@ describe('deriveRankingTop', () => {
       { listingId: 'todo', condition: 'new', landedPrice: { minCents: 'TODO', maxCents: 'TODO' } },
     ]);
     expect(top).toEqual([]);
+  });
+
+  it('treats landed prices within $3 (or 2%) as a tie: no "$0.00" reason, "Same delivered price" instead', () => {
+    const top = deriveRankingTop([
+      listing('a', 30000, { returns: { windowDays: 15, freeReturns: false } }),
+      listing('b', 30299, { returns: { windowDays: 15, freeReturns: false } }),
+      listing('c', 40000),
+    ]);
+
+    const [first, second] = top;
+    expect(first!.reasons).toContainEqual({ code: 'SAME_LANDED_PRICE', text: 'Same delivered price as #2' });
+    expect(second!.reasons).toContainEqual({ code: 'SAME_LANDED_PRICE', text: 'Same delivered price as #1' });
+    const reasons = [
+      ...(first!.reasons as Array<{ text: string }>),
+      ...(second!.reasons as Array<{ text: string }>),
+    ];
+    for (const reason of reasons) {
+      expect(reason.text).not.toContain('$0.00');
+    }
+  });
+
+  it('exact price ties are broken by returns, then warranty, then seller, so the more favorable one ranks first', () => {
+    const top = deriveRankingTop([
+      listing('worse-returns', 30000, {
+        returns: { windowDays: 15, freeReturns: false },
+        seller: { name: 'Zed', isRetailer: false },
+      }),
+      listing('better-returns', 30000, {
+        returns: { windowDays: 45, freeReturns: false },
+        seller: { name: 'Acme', isRetailer: false },
+      }),
+    ]);
+
+    expect(top.map((t) => t.listingId)).toEqual(['better-returns', 'worse-returns']);
+  });
+
+  it('"Best returns" only goes to the listing with the genuinely longest return window', () => {
+    const top = deriveRankingTop([
+      listing('cheapest', 30000, { returns: { windowDays: 10, freeReturns: false } }),
+      listing('mid', 32000, { returns: { windowDays: 10, freeReturns: false } }),
+      listing('priciest', 40000, { returns: { windowDays: 90, freeReturns: false } }),
+    ]);
+
+    const byId = Object.fromEntries(top.map((t) => [t.listingId, t]));
+    expect(byId.priciest).toMatchObject({ label: 'Best returns' });
+    expect(byId.mid).toMatchObject({ label: 'Other option we checked' });
+  });
+
+  it('never labels a listing "Best returns" when its window only ties the #1 pick, never beats it', () => {
+    const top = deriveRankingTop([
+      listing('cheapest', 30000, { returns: { windowDays: 15, freeReturns: false } }),
+      listing('tied-returns', 32000, { returns: { windowDays: 15, freeReturns: false } }),
+      listing('no-returns', 34000, { returns: { windowDays: 0, freeReturns: false } }),
+    ]);
+
+    for (const entry of top) {
+      expect(entry.label).not.toBe('Best returns');
+    }
+    const tied = top.find((t) => t.listingId === 'tied-returns')!;
+    const tiedReasons = tied.reasons as Array<{ code: string }>;
+    expect(tiedReasons.find((r) => r.code === 'RETURNS_WINDOW')).toBeUndefined();
+  });
+
+  it('a listing with no returns (0 or null) can never be labeled "Best returns"', () => {
+    const top = deriveRankingTop([
+      listing('cheap', 30000, { returns: { windowDays: 0, freeReturns: false } }),
+      listing('mid', 32000, { returns: { windowDays: 0, freeReturns: false } }),
+      listing('expensive', 35000, { returns: { windowDays: null, freeReturns: false } }),
+    ]);
+
+    for (const entry of top) {
+      expect(entry.label).not.toBe('Best returns');
+    }
   });
 });
 

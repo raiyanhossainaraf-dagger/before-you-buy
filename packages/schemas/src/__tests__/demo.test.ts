@@ -86,4 +86,32 @@ describe('M0.3 demoComparisonSchema', () => {
     const invalid = { ...validComparison, _sample: true };
     expect(demoComparisonSchema.safeParse(invalid).success).toBe(false);
   });
+
+  it('accepts product.image with src/alt/source/license', () => {
+    const withImage = {
+      ...validComparison,
+      product: {
+        ...validComparison.product,
+        image: {
+          src: '/demo/headphones.svg',
+          alt: 'Illustration of over-ear headphones',
+          source: 'Before You Buy illustration',
+          license: 'Original artwork',
+        },
+      },
+    };
+    expect(demoComparisonSchema.safeParse(withImage).success).toBe(true);
+  });
+
+  it('omitting product.image is still valid (illustration is optional, not required)', () => {
+    expect(demoComparisonSchema.safeParse(validComparison).success).toBe(true);
+  });
+
+  it('rejects product.image missing a required field', () => {
+    const invalid = {
+      ...validComparison,
+      product: { ...validComparison.product, image: { src: '/demo/headphones.svg', alt: 'Headphones' } },
+    };
+    expect(demoComparisonSchema.safeParse(invalid).success).toBe(false);
+  });
 });

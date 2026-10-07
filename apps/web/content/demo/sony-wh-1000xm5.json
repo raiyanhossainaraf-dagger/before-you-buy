@@ -5,7 +5,13 @@
   "product": {
     "name": "Sony WH-1000XM5 Wireless Headphones (Black)",
     "brand": "Sony",
-    "category": "headphones"
+    "category": "headphones",
+    "image": {
+      "src": "/demo/headphones.svg",
+      "alt": "Illustration of over-ear headphones",
+      "source": "Before You Buy illustration",
+      "license": "Original artwork, CC0"
+    }
   },
   "zip": "10001",
   "listings": [
@@ -231,8 +237,8 @@
         "label": "Lowest delivered price",
         "reasons": [
           {
-            "code": "LOWER_LANDED_PRICE",
-            "text": "$0.00 less delivered than #2"
+            "code": "SAME_LANDED_PRICE",
+            "text": "Same delivered price as #2"
           },
           {
             "code": "FREE_RETURNS",
@@ -243,15 +249,11 @@
       {
         "listingId": "sony-wh1000xm5-ebay",
         "rank": 2,
-        "label": "Best returns",
+        "label": "Other option we checked",
         "reasons": [
           {
-            "code": "HIGHER_LANDED_PRICE",
-            "text": "$0.00 more delivered than #1"
-          },
-          {
-            "code": "RETURNS_WINDOW",
-            "text": "0-day returns vs 30"
+            "code": "SAME_LANDED_PRICE",
+            "text": "Same delivered price as #1"
           }
         ]
       },

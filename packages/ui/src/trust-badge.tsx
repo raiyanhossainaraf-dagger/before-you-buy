@@ -33,9 +33,11 @@ export function TrustBadge({
     <Sheet
       title="Review authenticity"
       trigger={
-        <span className={cn('inline-flex items-center gap-1.5', BAND_CLASS[trust.band])}>
-          <Icon aria-hidden className="size-4 shrink-0" />
-          <span>{label}</span>
+        <span className="flex flex-col items-start gap-0.5">
+          <span className={cn('inline-flex items-center gap-1.5 whitespace-nowrap', BAND_CLASS[trust.band])}>
+            <Icon aria-hidden className="size-4 shrink-0" />
+            <span>{label}</span>
+          </span>
           {illustrative ? <span className="text-xs text-muted-foreground">(Example analysis)</span> : null}
         </span>
       }
