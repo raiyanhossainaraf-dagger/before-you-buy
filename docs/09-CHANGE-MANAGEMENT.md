@@ -188,6 +188,7 @@ Format: **DEC-NNN — Title** · date · status (`accepted` / `superseded by DEC
 | DEC-033 | 2026-10-05 | Provider policy gains `historyAllowed`; eBay/Best Buy default `aiUseAllowed=false`, `historyAllowed=false` until LEGAL-03/04 | Terms may forbid AI use and price modelling | accepted |
 | DEC-034 | 2026-10-05 | Amazon affiliate links behind `amazon.affiliate-links`, default off until LEGAL-02 | Associates price-display rules vs scraped prices | accepted |
 | DEC-035 | 2026-10-07 | `demoComparisonSchema.product` gains an optional `image` (`src`, `alt`, `source`, `license`); M0.3 demo products ship with original neutral SVG illustrations, not retailer photos | LEGAL-16 forbids retailer listing images; `source`/`license` record provenance so a manufacturer press image can replace the illustration later without a silent swap | accepted |
+| DEC-036 | 2026-10-07 | M0.4 adds `waitlist_confirmed` to the TR-ANL-02 analytics event set and a console-only `track()` adapter in `apps/web/lib/analytics.ts`, ahead of M0.7's PostHog wiring | The double opt-in needed a confirmation signal now; M0.7 swaps the adapter body for the real PostHog transport without changing call sites or the event schema | accepted |
 
 ### 7.1 Decision entry template
 

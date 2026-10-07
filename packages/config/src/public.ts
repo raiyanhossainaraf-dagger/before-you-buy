@@ -10,10 +10,15 @@ export * from './app';
  * Each variable is read by static member access because that is the only form
  * Next.js inlines into client bundles.
  */
+// .env.example leaves unset optional vars as an empty string, not absent;
+// Next.js inlines that literally, so optional() (which only accepts
+// undefined) needs this to tell "unset" from "set to empty" apart.
+const optionalString = () => z.preprocess((v) => (v === '' ? undefined : v), z.string().min(1).optional());
+
 const publicEnvSchema = z.strictObject({
   NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().min(1),
-  NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
-  NEXT_PUBLIC_POSTHOG_HOST: z.url().optional(),
+  NEXT_PUBLIC_POSTHOG_KEY: optionalString(),
+  NEXT_PUBLIC_POSTHOG_HOST: z.preprocess((v) => (v === '' ? undefined : v), z.url().optional()),
 });
 
 export type PublicEnv = z.infer<typeof publicEnvSchema>;

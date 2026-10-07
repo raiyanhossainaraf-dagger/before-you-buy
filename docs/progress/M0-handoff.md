@@ -66,11 +66,21 @@ Plan file: `C:\Users\ARAF\.claude\plans\vast-floating-lollipop.md` (full task br
 - `e2e/demo.spec.ts` gained a test asserting each tab shows exactly one alt-texted product image and that neither "$0.00" nor a bare "0-day" appears anywhere on the page. All 12 e2e tests pass (`pnpm --filter @byb/web build && pnpm test:e2e`).
 - Docs: UI §7.14 (now v1.1) documents both the image contract and the ranking-reason rules; DEC-035 records the schema addition.
 
+**M0.4 — Waitlist (double opt-in).** Local-only.
+
+- `packages/db/migrations/0000_wooden_leper_queen.sql` — the first migration (both Gate 0 tables, since both were already in `schema.ts` from M0.1; `CREATE EXTENSION IF NOT EXISTS citext` added by hand, drizzle-kit doesn't emit it). Applied to the local Docker Postgres (`pnpm db:migrate`).
+- `packages/core/src/confirm-token.ts` (+ tests): signed, expiring (`LINK_SIGNING_SECRET`, 24 h) HMAC-SHA256 token for the confirm link — `id` + `exp`, base64url, pure (time passed in).
+- `apps/web/lib/{turnstile,rate-limit,analytics}.ts` (+ tests): SEC-30 server-side Turnstile verification (real HTTP call to Cloudflare, even with the always-pass test keys); SEC-13 in-process fixed-window rate limiter (3/email/15 min, 10/IP/15 min — **ponytail debt:** resets on restart, not shared across instances; M15 replaces every call site with the Redis-backed limiter once this runs on more than one process); a console-only `track()` adapter validated against `analyticsEventSchema`, built ahead of M0.7's PostHog wiring (DEC-036 adds `waitlist_confirmed` to the TR-ANL-02 event set).
+- `apps/web/app/api/waitlist/route.tsx` (POST, DEC-031 db-import override) — validates, rate-limits, verifies Turnstile, upserts via the M0.1-scaffolded `waitlistRepo`, sends the confirmation email only when not already confirmed, and always returns the same enumeration-safe response (SEC-13 pattern) regardless of whether the address already existed.
+- `apps/web/app/api/waitlist/confirm/route.ts` (GET) — verifies the token, calls `confirmSignup`, redirects to `/confirm?status=ok|expired|invalid`. `apps/web/app/confirm/page.tsx` renders the friendly copy for each status (no db import needed there, so it stays outside the DEC-031 override).
+- `apps/web/app/_components/landing/{waitlist-form,turnstile-widget}.tsx`: React Hook Form + the same `waitlistSignupRequestSchema` Zod schema the server uses (via `z.input`/`z.output` since `source` carries a default); reads `?source=`/`?utm_*=`/`document.referrer` once on mount; consent checkbox uses the existing `CONSENT.text`/`CONSENT.version` from `packages/config` (already written in M0.1, never wired up until now); submit is disabled until the Turnstile widget (loaded from Cloudflare's script, no new dependency) produces a token.
+- Two latent bugs fixed to unblock this (not M0.4-specific, but both blocked it): `packages/config/src/public.ts` and `server.ts` treated an env var left as `""` (how `.env.example`/`.env.local` represent "unset optional") as a value, not as unset, since Zod's `.optional()` only accepts `undefined` — added an empty-string-to-undefined preprocessor to both, with tests. `infra/docker-compose.yml`'s Postgres volume mounted at `/var/lib/postgresql/data`, which pg18's image no longer supports (docker-library/postgres#1259); the container never actually started before this. Fixed to mount `/var/lib/postgresql` instead; the old empty volume was removed.
+- Tests: `confirm-token.test.ts`, `rate-limit.test.ts`, `turnstile.test.ts`, `analytics.test.ts`, `public.test.ts`, `server.test.ts` (unit); `packages/db/src/__tests__/waitlist.integration.test.ts` via the new `pnpm test:integration` (`vitest.integration.config.ts`, needs `pnpm services:up`) — idempotent upsert, confirm-is-a-no-op-on-replay, citext case-insensitivity; `e2e/waitlist.spec.ts` — full browser flow (fill form → real Turnstile widget → submit → poll Mailpit's REST API for the email → follow the link → confirmed page), invalid-token page, unchecked-consent validation, axe at 375px. Manually verified the same flow with curl + Mailpit's API + a direct `psql` check that `confirmed_at` was set.
+- `pnpm lint && pnpm typecheck && pnpm test && pnpm test:integration` all pass (84 unit tests, 3 integration); `pnpm --filter @byb/web build && pnpm test:e2e` passes (16 e2e tests, all specs).
+
 ## Not started
 
-M0.4 (waitlist) through M0.9 (test kit) — see the plan file for the full breakdown, the font/demo-data/M0.9 decisions already made with the user, and the verification table. M0.8 (deploy) stays deferred per the original scope.
-
-Nothing under `packages/db/migrations/` exists yet — no migration has been generated or run.
+M0.5 (pre-orders) through M0.9 (test kit) — see the plan file for the full breakdown, the font/demo-data/M0.9 decisions already made with the user, and the verification table. M0.8 (deploy) stays deferred per the original scope.
 
 ## Commands to pick this back up
 
@@ -92,4 +102,4 @@ pnpm --filter @byb/web build && pnpm test:e2e   # e2e needs a production build f
 
 ## Next step
 
-M0.3 is fully done: real captured data in `apps/web/content/demo/*.json`, `pnpm demo:validate` clean, `pnpm demo:derive` tooling in place. Next up is M0.4 (waitlist). Per the user's standing instruction, do not start new M0 tasks until told to.
+M0.4 is fully done: migration applied, waitlist form + double opt-in + confirm page working end to end (verified via Playwright and manually), unit/integration/e2e all green. Next up is M0.5 (pre-orders). Per the user's standing instruction, do not start new M0 tasks until told to.

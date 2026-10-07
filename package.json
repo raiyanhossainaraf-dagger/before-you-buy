@@ -14,6 +14,7 @@
     "lint": "eslint .",
     "typecheck": "turbo run typecheck",
     "test": "vitest run",
+    "test:integration": "vitest run -c vitest.integration.config.ts",
     "test:e2e": "playwright test",
     "db:generate": "pnpm --filter @byb/db run generate",
     "db:migrate": "pnpm --filter @byb/db run migrate",

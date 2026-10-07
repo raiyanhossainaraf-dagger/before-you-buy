@@ -59,6 +59,9 @@ export const analyticsEventSchema = z.discriminatedUnion('name', [
     name: z.literal('waitlist_signed_up'),
     props: z.strictObject({ source: z.string().max(40) }),
   }),
+  // M0.4: added ahead of M0.7's PostHog wiring so the double opt-in has a
+  // console-logged signal now; same event set M0.7 wires to PostHog (DEC-036).
+  z.strictObject({ name: z.literal('waitlist_confirmed'), props: z.strictObject({}) }),
   z.strictObject({ name: z.literal('preorder_started'), props: z.strictObject({}) }),
   z.strictObject({
     name: z.literal('preorder_paid'),

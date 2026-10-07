@@ -13,7 +13,9 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - byb_pg:/var/lib/postgresql/data
+      # pg18+ images store data under a major-version subdirectory of this
+      # single mount point, not directly at .../data (docker-library/postgres#1259).
+      - byb_pg:/var/lib/postgresql
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U byb -d byb']
       interval: 5s

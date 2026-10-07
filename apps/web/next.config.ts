@@ -1,4 +1,9 @@
+import { config } from 'dotenv';
 import type { NextConfig } from 'next';
+
+// Next.js only auto-loads .env* from this directory; the monorepo's single
+// .env.local lives at the repo root (same pattern as packages/db/drizzle.config.ts).
+config({ path: '../../.env.local', quiet: true });
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,

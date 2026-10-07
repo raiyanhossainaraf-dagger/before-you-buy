@@ -14,6 +14,12 @@ const transportEnum = z.enum(['smtp', 'resend']);
 const paymentsEnum = z.enum(['mock', 'stripe']);
 const analyticsEnum = z.enum(['console', 'posthog']);
 
+// .env.example leaves an unset optional var as an empty string, not absent;
+// process.env inlines that literally, so optional() (which only accepts
+// undefined) needs this to tell "unset" from "set to empty" apart.
+const emptyToUndefined = (v: unknown) => (v === '' ? undefined : v);
+const optionalString = () => z.preprocess(emptyToUndefined, z.string().min(1).optional());
+
 const serverEnvSchema = z
   .object({
     APP_ENV: z.enum(['local', 'preview', 'production']),
@@ -32,16 +38,16 @@ const serverEnvSchema = z
 
     EMAIL_TRANSPORT: transportEnum,
     EMAIL_FROM: z.string().min(1),
-    SMTP_HOST: z.string().min(1).optional(),
-    SMTP_PORT: z.coerce.number().int().min(1).max(65_535).optional(),
-    RESEND_API_KEY: z.string().min(1).optional(),
+    SMTP_HOST: optionalString(),
+    SMTP_PORT: z.preprocess(emptyToUndefined, z.coerce.number().int().min(1).max(65_535).optional()),
+    RESEND_API_KEY: optionalString(),
 
     PAYMENTS_PROVIDER: paymentsEnum,
-    STRIPE_SECRET_KEY: z.string().min(1).optional(),
-    STRIPE_WEBHOOK_SECRET: z.string().min(1).optional(),
+    STRIPE_SECRET_KEY: optionalString(),
+    STRIPE_WEBHOOK_SECRET: optionalString(),
 
     ANALYTICS_TRANSPORT: analyticsEnum,
-    POSTHOG_API_KEY: z.string().min(1).optional(),
+    POSTHOG_API_KEY: optionalString(),
   })
   // Fail at boot rather than at the moment of the first send or charge.
   .superRefine((env, ctx) => {

@@ -7,5 +7,7 @@ export default defineConfig({
     // covered by Playwright instead of a second test runtime.
     environment: 'node',
     include: ['packages/*/src/**/*.test.ts', 'apps/*/lib/**/*.test.ts'],
+    // Needs Docker Postgres; run separately via `pnpm test:integration`.
+    exclude: ['**/node_modules/**', '**/*.integration.test.ts'],
   },
 });

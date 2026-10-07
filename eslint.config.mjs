@@ -93,11 +93,28 @@ const nextConfigScopedToWeb = nextPlugin.map((entry) =>
   entry.rules ? { ...entry, files: ['apps/web/**/*.{js,jsx,ts,tsx}'] } : entry,
 );
 
+/**
+ * The React Compiler rules bundled in eslint-config-next (react-hooks/purity,
+ * react-hooks/error-boundaries, ...) guess "is this a component?" from the
+ * exported name. Route Handlers export `GET`/`POST`/etc. — uppercase, so the
+ * heuristic misreads them as components and flags ordinary server-side code
+ * (Date.now(), constructing a JSX element to hand to an email renderer).
+ * Route Handlers are not components; this scope matches webBoundaryOverride.
+ */
+const routeHandlersAreNotComponents = {
+  files: ['apps/web/app/api/**/*.{ts,tsx}', 'apps/web/app/admin/**/*.{ts,tsx}'],
+  rules: {
+    'react-hooks/purity': 'off',
+    'react-hooks/error-boundaries': 'off',
+  },
+};
+
 export default tseslint.config(
   { ignores: ['**/.next/**', '**/dist/**', '**/.turbo/**', '**/migrations/**', '**/node_modules/**'] },
   ...nextConfigScopedToWeb,
   webBoundary,
   webBoundaryOverride,
+  routeHandlersAreNotComponents,
   packagesBoundary,
   noDangerousHtml,
   copyRules,

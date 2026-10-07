@@ -33,6 +33,13 @@ export const CONSENT = {
     'One click unsubscribes. We never sell your address.',
 } as const;
 
+/**
+ * CAN-SPAM / SEC-53: bulk mail must carry a sender identity and postal
+ * address. No address is set yet (LEGAL-08 pending legal review); M0.6
+ * replaces this placeholder with the real one.
+ */
+export const SENDER_IDENTITY = 'Before You Buy (postal address pending legal review)';
+
 /** PRD §8. Shown as a preview at Gate 0; billing itself is v4.5 (M18). */
 export const PLANS = [
   {
