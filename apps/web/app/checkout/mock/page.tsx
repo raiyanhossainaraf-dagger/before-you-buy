@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { serverEnv } from '@byb/config/server';
+import { isLocal, serverEnv } from '@byb/config/server';
 import { PREORDER_OFFER } from '@byb/config';
 
 export const metadata: Metadata = { title: 'Test checkout' };
@@ -18,7 +18,7 @@ export default async function MockCheckoutPage({
 }: {
   searchParams: Promise<{ session?: string; email?: string; offer?: string; amount?: string }>;
 }) {
-  if (serverEnv().PAYMENTS_PROVIDER !== 'mock') notFound();
+  if (!isLocal() || serverEnv().PAYMENTS_PROVIDER !== 'mock') notFound();
 
   const { session, email, offer, amount } = await searchParams;
   if (!session || !email || !offer || !amount) notFound();

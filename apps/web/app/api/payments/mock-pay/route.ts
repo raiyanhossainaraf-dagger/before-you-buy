@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { serverEnv } from '@byb/config/server';
+import { isLocal, serverEnv } from '@byb/config/server';
 import { signMockWebhook } from '@/lib/payments/mock-signature';
 import { MOCK_SIGNATURE_HEADER } from '@/lib/payments/mock';
 
@@ -19,7 +19,7 @@ const mockPayFormSchema = z.strictObject({
  */
 export async function POST(req: Request) {
   const env = serverEnv();
-  if (env.PAYMENTS_PROVIDER !== 'mock') {
+  if (!isLocal() || env.PAYMENTS_PROVIDER !== 'mock') {
     return NextResponse.json({ ok: false }, { status: 404 });
   }
 

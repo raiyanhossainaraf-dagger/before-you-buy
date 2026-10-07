@@ -76,6 +76,15 @@ const serverEnvSchema = z
           'STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET are required when PAYMENTS_PROVIDER=stripe',
       });
     }
+    // The mock payment provider and /checkout/mock have no real money behind
+    // them — never allowed outside a local dev environment.
+    if (env.PAYMENTS_PROVIDER === 'mock' && env.APP_ENV !== 'local') {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['PAYMENTS_PROVIDER'],
+        message: 'PAYMENTS_PROVIDER=mock is only allowed when APP_ENV=local',
+      });
+    }
     if (env.ANALYTICS_TRANSPORT === 'posthog' && !env.POSTHOG_API_KEY) {
       ctx.addIssue({
         code: 'custom',

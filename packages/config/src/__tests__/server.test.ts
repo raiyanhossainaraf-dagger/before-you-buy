@@ -47,3 +47,46 @@ describe('serverEnv (.env.example leaves unset optional vars empty, not absent)'
     expect(() => serverEnv()).toThrow(/RESEND_API_KEY/);
   });
 });
+
+describe('serverEnv (mock payments provider is local-only)', () => {
+  it('rejects PAYMENTS_PROVIDER=mock outside APP_ENV=local', async () => {
+    process.env = { ...process.env, ...BASE_ENV, APP_ENV: 'production' };
+
+    const { serverEnv } = await import('../server');
+
+    expect(() => serverEnv()).toThrow(/PAYMENTS_PROVIDER/);
+  });
+
+  it('allows PAYMENTS_PROVIDER=mock when APP_ENV=local', async () => {
+    process.env = { ...process.env, ...BASE_ENV, APP_ENV: 'local' };
+
+    const { serverEnv } = await import('../server');
+
+    expect(serverEnv().PAYMENTS_PROVIDER).toBe('mock');
+  });
+});
+
+describe('isLocal', () => {
+  it('is false outside APP_ENV=local, so local-only routes (mock checkout, /admin/gate0) 404', async () => {
+    process.env = {
+      ...process.env,
+      ...BASE_ENV,
+      APP_ENV: 'production',
+      PAYMENTS_PROVIDER: 'stripe',
+      STRIPE_SECRET_KEY: 'sk_test_x',
+      STRIPE_WEBHOOK_SECRET: 'whsec_x',
+    };
+
+    const { isLocal } = await import('../server');
+
+    expect(isLocal()).toBe(false);
+  });
+
+  it('is true when APP_ENV=local', async () => {
+    process.env = { ...process.env, ...BASE_ENV, APP_ENV: 'local' };
+
+    const { isLocal } = await import('../server');
+
+    expect(isLocal()).toBe(true);
+  });
+});
