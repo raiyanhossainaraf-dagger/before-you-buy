@@ -71,6 +71,47 @@ test.describe('Home page', () => {
   });
 });
 
+/**
+ * Prompt B — the mobile menu is a native `<details>`/`<summary>` disclosure
+ * (no checkbox, no client JS). Checked on an inner page, since the hero's
+ * own combobox occupies "Pricing"-adjacent space on home.
+ */
+test.describe('Header mobile menu (details/summary disclosure)', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+  });
+
+  test('menu links are hidden until the summary is activated, then reachable', async ({ page }) => {
+    await page.goto('/pricing');
+    const nav = page.locator('header details nav[aria-label="Primary"]');
+    await expect(nav).toBeHidden();
+
+    await page.locator('header details summary').click();
+    await expect(nav.getByRole('link', { name: 'Pricing' })).toBeVisible();
+    await expect(nav.getByRole('link', { name: 'Sign in' })).toBeVisible();
+    await expect(nav.getByRole('link', { name: 'Get notified' })).toBeVisible();
+  });
+
+  test('is operable by keyboard alone (Tab to the toggle, Enter to open)', async ({ page }) => {
+    await page.goto('/pricing');
+    const toggle = page.locator('header details summary');
+    await toggle.focus();
+    await expect(toggle).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(
+      page.locator('header details nav[aria-label="Primary"]').getByRole('link', { name: 'Pricing' }),
+    ).toBeVisible();
+  });
+
+  test('axe reports no serious or critical violations with the menu open at 375px', async ({ page }) => {
+    await page.goto('/pricing');
+    await page.locator('header details summary').click();
+    const results = await new AxeBuilder({ page }).analyze();
+    const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
+    expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
+  });
+});
+
 /** DEC-038 — /pricing: plan cards from packages/config, pre-order offer, credits FAQ. */
 test.describe('Pricing page', () => {
   test('loads with a visible h1', async ({ page }) => {

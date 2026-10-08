@@ -15,6 +15,13 @@
       "when": 1791444661593,
       "tag": "0001_wide_winter_soldier",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791447062126,
+      "tag": "0002_bouncy_vapor",
+      "breakpoints": true
     }
   ]
 }

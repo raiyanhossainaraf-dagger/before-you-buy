@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm';
 import {
+  boolean,
   char,
   check,
   customType,
@@ -69,5 +70,23 @@ export const preorders = pgTable(
   (t) => [check('preorders_status_check', sql`${t.status} IN ('paid', 'refunded')`)],
 );
 
+/**
+ * Gate 0 demand signal (Prompt B): every search logged, matched or not, with
+ * no IP and no email — separate from `waitlist_signups` so demand shows up
+ * even from people who never leave an address.
+ */
+export const searchInterest = pgTable(
+  'search_interest',
+  {
+    id: uuidv7Pk(),
+    normalizedQuery: text('normalized_query').notNull(),
+    queryType: text('query_type').notNull(),
+    matchedDemo: boolean('matched_demo').notNull().default(false),
+    createdAt: createdAt(),
+  },
+  (t) => [check('search_interest_query_type_check', sql`${t.queryType} IN ('name', 'url')`)],
+);
+
 export type WaitlistSignup = typeof waitlistSignups.$inferSelect;
 export type Preorder = typeof preorders.$inferSelect;
+export type SearchInterest = typeof searchInterest.$inferSelect;

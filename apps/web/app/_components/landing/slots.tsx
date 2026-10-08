@@ -1,8 +1,5 @@
-import { demoComparisonSchema, type DemoComparison } from '@byb/schemas';
 import { DemoPicker } from './demo-picker';
-import sonyWh1000xm5 from '../../../content/demo/sony-wh-1000xm5.json';
-import robotVacuum from '../../../content/demo/robot-vacuum.json';
-import ipadBase from '../../../content/demo/ipad-base.json';
+import { loadDemoComparisons } from '@/lib/demo-comparisons';
 
 /**
  * The M0.3 demo falls back to this pending message when none of the hand-filled
@@ -28,18 +25,6 @@ function SlotSection({
       <p className="mt-4 text-sm text-muted-foreground">{body}</p>
     </section>
   );
-}
-
-/**
- * M0.3: only comparisons whose captured data already validates (no leftover
- * TODOs) are shown — a hand-filled JSON file with a typo falls back to the
- * pending message instead of breaking the landing page.
- */
-function loadDemoComparisons(): DemoComparison[] {
-  return [sonyWh1000xm5, robotVacuum, ipadBase]
-    .map((raw) => demoComparisonSchema.safeParse(raw))
-    .filter((result) => result.success)
-    .map((result) => result.data);
 }
 
 export function DemoSlot() {

@@ -5,3 +5,4 @@ export * from './waitlist';
 export * from './preorder';
 export * from './analytics';
 export * from './gate0';
+export * from './search-interest';

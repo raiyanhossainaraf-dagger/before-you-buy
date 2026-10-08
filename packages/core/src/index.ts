@@ -4,3 +4,4 @@ export * from './relative-time';
 export * from './history-label';
 export * from './confirm-token';
 export * from './gate0-status';
+export * from './url-parse';

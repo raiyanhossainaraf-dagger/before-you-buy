@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Version | 1.1 |
+| Version | 1.2 |
 | Database | PostgreSQL 18 on Neon · Drizzle ORM · extensions `vector`, `pg_trgm`, `citext` |
 | Cache/queues | Redis 7 · BullMQ |
 | Related | [02-ARCHITECTURE §10](02-ARCHITECTURE.md#10-data-architecture-summary) · [03-TECHNICAL-REQUIREMENTS](03-TECHNICAL-REQUIREMENTS.md) · [05-SECURITY](05-SECURITY.md) |
@@ -704,6 +704,18 @@ CREATE TABLE preorders (
   refunded_at                 timestamptz
 );
 ```
+
+```sql
+CREATE TABLE search_interest (
+  id                uuid PRIMARY KEY DEFAULT uuidv7(),
+  normalized_query  text NOT NULL,   -- TR-INT-06 normalization, or the raw pasted URL (truncated to 200 chars)
+  query_type        text NOT NULL CHECK (query_type IN ('name', 'url')),
+  matched_demo      boolean NOT NULL DEFAULT false,
+  created_at        timestamptz NOT NULL DEFAULT now()
+);
+```
+
+`search_interest` logs every `/search` view, matched or not — separate from `waitlist_signups` so demand shows up even from visitors who never leave an email. No IP, no email (rule 1). `/admin/gate0` shows the top 20 queries by search count.
 
 At v4.0 launch, confirmed waitlist emails are invited; pre-orders are converted to plan credits or subscriptions per the offer terms.
 

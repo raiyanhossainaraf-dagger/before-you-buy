@@ -1,4 +1,5 @@
 import { POSITIONING_CLAIM } from '@byb/config';
+import { SearchCombobox } from '../search/search-combobox';
 
 /** UI §7.1 — the short inline version of "how it works", not a standalone section. */
 const STEPS = [
@@ -19,12 +20,9 @@ export function Hero() {
         history.
       </p>
 
-      {/* Prompt B: real search lands here once it ships; the slot is marked so it's easy to find. */}
-      <div
-        data-slot="search-bar"
-        className="mx-auto mt-8 flex min-h-11 max-w-xl items-center rounded-control border border-border bg-card px-4 text-left text-sm text-muted-foreground"
-      >
-        Search a product, or paste an Amazon, eBay or Best Buy link — coming soon
+      {/* Prompt B: preview-mode search — matches the 3 demo products, else an honest "not live yet" preview. */}
+      <div data-slot="search-bar">
+        <SearchCombobox />
       </div>
 
       <ol className="mx-auto mt-6 flex flex-col gap-1 text-sm text-muted-foreground sm:flex-row sm:justify-center sm:gap-4">

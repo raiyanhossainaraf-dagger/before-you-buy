@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { isLocal } from '@byb/config/server';
-import { waitlistRepo, preorderRepo } from '@byb/db';
+import { waitlistRepo, preorderRepo, searchInterestRepo } from '@byb/db';
 import { gate0Status, type Gate0Status } from '@byb/core';
 import { gate0ManualRepliesSchema } from '@byb/schemas';
 import gate0Manual from '../../../content/gate0-manual.json';
@@ -33,11 +33,12 @@ function StatusLine({ status }: { status: Gate0Status }) {
 export default async function Gate0DashboardPage() {
   if (!isLocal()) notFound();
 
-  const [signups, bySource, byDay, preorders] = await Promise.all([
+  const [signups, bySource, byDay, preorders, topSearches] = await Promise.all([
     waitlistRepo.countSignups(),
     waitlistRepo.countSignupsBySource(),
     waitlistRepo.signupsByDay(),
     preorderRepo.countPreorders(),
+    searchInterestRepo.topQueries(20),
   ]);
 
   const manualReplies = gate0ManualRepliesSchema.parse(gate0Manual);
@@ -114,6 +115,31 @@ export default async function Gate0DashboardPage() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="mt-8">
+        <h2 className="text-lg font-semibold">Top searches</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Every /search view, matched or not — no IP, no email.
+        </p>
+        <table className="mt-3 w-full text-sm">
+          <thead>
+            <tr className="text-left text-muted-foreground">
+              <th className="py-1">Query</th>
+              <th className="py-1">Searches</th>
+              <th className="py-1">Matched a demo?</th>
+            </tr>
+          </thead>
+          <tbody>
+            {topSearches.map((row) => (
+              <tr key={row.normalizedQuery} className="border-t border-border">
+                <td className="py-1">{row.normalizedQuery}</td>
+                <td className="py-1">{row.total}</td>
+                <td className="py-1">{row.matchedDemo ? 'Yes' : 'No'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
 
       <section className="mt-8">
