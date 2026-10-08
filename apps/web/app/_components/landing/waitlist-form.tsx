@@ -19,11 +19,17 @@ type WaitlistFormInput = z.input<typeof waitlistSignupRequestSchema>;
 
 const UTM_PARAMS = ['source', 'medium', 'campaign', 'term', 'content'] as const;
 
-/** Reads `?source=` and `?utm_*=` once on mount; defaults match the server schema. */
-function readFormDefaults(): Pick<WaitlistSignupRequest, 'source' | 'utm' | 'referrer'> {
+/**
+ * Reads `?source=`, `?utm_*=` and `?q=` once on mount; defaults match the
+ * server schema. A `q` param (DEC-039, set by `/notify?q=`) always wins over
+ * `?source=` — reaching this form with a search term means the source is the
+ * search itself, and the query is recorded against the signup.
+ */
+function readFormDefaults(): Pick<WaitlistSignupRequest, 'source' | 'utm' | 'referrer' | 'query'> {
   if (typeof window === 'undefined') return { source: 'direct' };
 
   const params = new URLSearchParams(window.location.search);
+  const query = params.get('q')?.trim() || undefined;
   const sourceParam = signupSourceSchema.safeParse(params.get('source'));
 
   const utm = Object.fromEntries(
@@ -31,9 +37,10 @@ function readFormDefaults(): Pick<WaitlistSignupRequest, 'source' | 'utm' | 'ref
   );
 
   return {
-    source: sourceParam.success ? sourceParam.data : 'direct',
+    source: query ? 'search' : sourceParam.success ? sourceParam.data : 'direct',
     utm: Object.keys(utm).length > 0 ? utm : undefined,
     referrer: document.referrer || undefined,
+    query,
   };
 }
 
@@ -59,6 +66,7 @@ export function WaitlistForm() {
     setValue('source', defaults.source);
     if (defaults.utm) setValue('utm', defaults.utm);
     if (defaults.referrer) setValue('referrer', defaults.referrer);
+    if (defaults.query) setValue('query', defaults.query);
   }, [setValue]);
 
   const handleVerify = useCallback((token: string) => setValue('turnstileToken', token), [setValue]);

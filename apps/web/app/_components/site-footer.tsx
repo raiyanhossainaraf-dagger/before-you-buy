@@ -5,7 +5,8 @@ const LEGAL_LINKS = [
   { href: '/affiliate-disclosure', label: 'Affiliate disclosure' },
 ] as const;
 
-export function LandingFooter() {
+/** DEC-038: global footer on every route. */
+export function SiteFooter() {
   return (
     <footer className="border-t border-border">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-8 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">

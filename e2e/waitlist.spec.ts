@@ -26,10 +26,9 @@ test.describe('M0.4 waitlist', () => {
   test('sign up, confirm via the emailed link, and the row is confirmed', async ({ page }) => {
     const email = `e2e-${Date.now()}@example.com`;
 
-    await page.goto('/');
-    const waitlistSlot = page.locator('[data-slot="email-capture-m0-4"]');
-    await waitlistSlot.getByLabel('Email', { exact: true }).fill(email);
-    await waitlistSlot.getByLabel(/launches/).check();
+    await page.goto('/notify');
+    await page.getByLabel('Email', { exact: true }).fill(email);
+    await page.getByLabel(/launches/).check();
 
     // SEC-30: the widget makes a real network call to Cloudflare (always-pass test key).
     await expect(page.getByRole('button', { name: 'Get notified' })).toBeEnabled({ timeout: 15_000 });
@@ -48,19 +47,28 @@ test.describe('M0.4 waitlist', () => {
 
   test('rejects an unchecked consent box without calling the server', async ({ page }) => {
     const email = `e2e-noconsent-${Date.now()}@example.com`;
-    await page.goto('/');
-    await page.locator('[data-slot="email-capture-m0-4"]').getByLabel('Email', { exact: true }).fill(email);
+    await page.goto('/notify');
+    await page.getByLabel('Email', { exact: true }).fill(email);
     await expect(page.getByRole('button', { name: 'Get notified' })).toBeEnabled({ timeout: 15_000 });
     await page.getByRole('button', { name: 'Get notified' }).click();
     await expect(page.getByRole('alert').filter({ hasText: 'Consent is required' })).toBeVisible();
   });
 
+  test('?q= stores the query and sets source to search', async ({ page }) => {
+    const email = `e2e-search-${Date.now()}@example.com`;
+    await page.goto('/notify?q=sony%20headphones');
+    await expect(page.getByRole('heading', { name: /sony headphones/i })).toBeVisible();
+    await page.getByLabel('Email', { exact: true }).fill(email);
+    await page.getByLabel(/launches/).check();
+    await expect(page.getByRole('button', { name: 'Get notified' })).toBeEnabled({ timeout: 15_000 });
+    await page.getByRole('button', { name: 'Get notified' }).click();
+    await expect(page.getByRole('status')).toContainText('Check your inbox');
+  });
+
   test('axe reports no serious or critical violations at 375px', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
-    await page.goto('/');
-    const results = await new AxeBuilder({ page })
-      .include('[data-slot="email-capture-m0-4"]')
-      .analyze();
+    await page.goto('/notify');
+    const results = await new AxeBuilder({ page }).analyze();
     const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
     expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
   });

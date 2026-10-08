@@ -190,6 +190,8 @@ Format: **DEC-NNN — Title** · date · status (`accepted` / `superseded by DEC
 | DEC-035 | 2026-10-07 | `demoComparisonSchema.product` gains an optional `image` (`src`, `alt`, `source`, `license`); M0.3 demo products ship with original neutral SVG illustrations, not retailer photos | LEGAL-16 forbids retailer listing images; `source`/`license` record provenance so a manufacturer press image can replace the illustration later without a silent swap | accepted |
 | DEC-036 | 2026-10-07 | M0.4 adds `waitlist_confirmed` to the TR-ANL-02 analytics event set and a console-only `track()` adapter in `apps/web/lib/analytics.ts`, ahead of M0.7's PostHog wiring | The double opt-in needed a confirmation signal now; M0.7 swaps the adapter body for the real PostHog transport without changing call sites or the event schema | accepted |
 | DEC-037 | 2026-10-07 | M0.5 pre-orders: `PaymentProvider` lives in `apps/web/lib/payments/` (mock + stripe, selected by `PAYMENTS_PROVIDER`); the mock webhook signature reuses `LINK_SIGNING_SECRET` rather than a new secret; `stripeProvider.parseWebhook` only maps `checkout.session.completed`, everything else is `ignored` (TR-BILL-07 puts Stripe refunds in the dashboard, not a webhook); `pnpm preorder:refund <id>` operates on the `preorders` row id, not the Stripe/mock session id | Keeps the M0 local-only Stripe account unnecessary while leaving the real provider ready to select; no new env var for a local-only signing need | accepted |
+| DEC-038 | 2026-10-08 | Gate 0 site splits into separate routes before hosting: `/` (hero, trust questions, demo only), `/pricing` (plans + pre-order offer), `/notify` (waitlist form), with a global header/footer added in `RootLayout` | A single landing page no longer reads clearly once pricing, pre-orders and the waitlist all have real forms; UI §3 sitemap already specified `/pricing` as a separate route | accepted |
+| DEC-039 | 2026-10-08 | `waitlist_signups` gains a nullable `query` text column; `signupSourceSchema` gains `'search'`; `/notify?q=<query>` shows "We'll tell you when you can check '{query}'" and stores the query only when the signup's source is `search` | `/notify` can now be reached from a future search box with no match yet (DEC-038); recording what people searched for is Gate 0 signal, not just an email address | accepted |
 
 ### 7.1 Decision entry template
 
@@ -210,6 +212,8 @@ Format: **DEC-NNN — Title** · date · status (`accepted` / `superseded by DEC
 |---|---|---|---|
 | 2026-10-05 | All (`CLAUDE.md`, 01–09) | 1.0 | Initial repo documentation set created from PRD v4.0 and Architecture & Stack (Oct 4, 2026). Added editor's notes for the Amazon Creators API change, review register, milestone plan and decision log. |
 | 2026-10-07 | 07-UI-UX-DESIGN | 1.1 | M0.3 polish: documented the demo product-image header (DEC-035) and the ranking-reason honesty rules (ties, "Best returns" eligibility, "No returns" wording). |
+| 2026-10-08 | 07-UI-UX-DESIGN | 1.2 | §3 sitemap updated: `/` is header/footer only at the top level now, with `/pricing` and `/notify` as real sibling routes (DEC-038). |
+| 2026-10-08 | 04-BACKEND-SCHEMA | 1.1 | `waitlist_signups` gains `query` (DEC-039). |
 
 ---
 

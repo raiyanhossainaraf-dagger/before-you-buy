@@ -8,6 +8,7 @@ export type NewSignup = {
   source: string;
   utm?: Utm;
   referrer?: string;
+  query?: string;
   consentTextVersion: string;
 };
 
@@ -32,6 +33,7 @@ export async function upsertSignup(input: NewSignup): Promise<SignupUpsert> {
       source: input.source,
       utm: input.utm,
       referrer: input.referrer,
+      query: input.query,
       consentTextVersion: input.consentTextVersion,
     })
     .onConflictDoNothing({ target: waitlistSignups.email })

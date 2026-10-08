@@ -38,6 +38,8 @@ export const waitlistSignups = pgTable('waitlist_signups', {
   source: text('source'),
   utm: jsonb('utm').$type<Utm>(),
   referrer: text('referrer'),
+  // DEC-039: the product name from /notify?q=, recorded only when source is 'search'.
+  query: text('query'),
   // LEGAL-08: records which consent sentence this person agreed to.
   consentTextVersion: text('consent_text_version').notNull(),
   confirmedAt: timestamp('confirmed_at', { withTimezone: true }),

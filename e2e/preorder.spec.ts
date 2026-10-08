@@ -26,8 +26,8 @@ test.describe('M0.5 pre-orders', () => {
   }) => {
     const email = `e2e-preorder-${Date.now()}@example.com`;
 
-    await page.goto('/');
-    await page.locator('[data-slot="preorder-m0-5"]').getByLabel('Email').fill(email);
+    await page.goto('/pricing');
+    await page.getByLabel('Email').fill(email);
 
     const reserveButton = page.getByRole('button', { name: 'Reserve my spot' });
     await expect(reserveButton).toBeEnabled({ timeout: 15_000 });
@@ -48,8 +48,8 @@ test.describe('M0.5 pre-orders', () => {
   test('canceling the mock checkout charges nothing', async ({ page }) => {
     const email = `e2e-preorder-cancel-${Date.now()}@example.com`;
 
-    await page.goto('/');
-    await page.locator('[data-slot="preorder-m0-5"]').getByLabel('Email').fill(email);
+    await page.goto('/pricing');
+    await page.getByLabel('Email').fill(email);
     const reserveButton = page.getByRole('button', { name: 'Reserve my spot' });
     await expect(reserveButton).toBeEnabled({ timeout: 15_000 });
     await reserveButton.click();
@@ -63,10 +63,8 @@ test.describe('M0.5 pre-orders', () => {
 
   test('axe reports no serious or critical violations at 375px', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
-    await page.goto('/');
-    const results = await new AxeBuilder({ page })
-      .include('[data-slot="preorder-m0-5"]')
-      .analyze();
+    await page.goto('/pricing');
+    const results = await new AxeBuilder({ page }).analyze();
     const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
     expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
   });

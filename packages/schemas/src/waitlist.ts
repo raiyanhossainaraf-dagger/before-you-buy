@@ -6,6 +6,7 @@ export const signupSourceSchema = z.enum([
   'reddit',
   'dm',
   'direct',
+  'search',
   'other',
 ]);
 export type SignupSource = z.infer<typeof signupSourceSchema>;
@@ -26,6 +27,8 @@ export const waitlistSignupRequestSchema = z.strictObject({
   source: signupSourceSchema.default('direct'),
   utm: utmSchema.optional(),
   referrer: z.string().max(500).optional(),
+  // DEC-039: the product name typed on /notify?q=, recorded only when source is 'search'.
+  query: z.string().max(200).optional(),
   consent: z.literal(true, {
     error: 'Consent is required before we store an email address (LEGAL-08).',
   }),

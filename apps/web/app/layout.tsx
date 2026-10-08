@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import { POSITIONING_CLAIM } from '@byb/config';
 import { PageViewTracker } from './_components/page-view-tracker';
+import { SiteHeader } from './_components/site-header';
+import { SiteFooter } from './_components/site-footer';
 import './globals.css';
 
 /**
@@ -40,7 +42,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <PageViewTracker />
+        <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

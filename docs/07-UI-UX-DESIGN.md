@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Version | 1.1 |
+| Version | 1.2 |
 | Design system | shadcn/ui (Base UI primitives) on Tailwind CSS v4, tokens in `@theme`, Lucide icons |
 | Accessibility target | WCAG 2.2 AA |
 | Related | [01-PRD §3, §5](01-PRD.md#5-consumer-web-requirements) · [02-ARCHITECTURE §12–13](02-ARCHITECTURE.md#13-frontend-and-design-system-summary) · [03-TECHNICAL-REQUIREMENTS](03-TECHNICAL-REQUIREMENTS.md) |
@@ -55,11 +55,12 @@ flowchart TB
   Account --> Team["/account/team (v4.5)"]
   Account --> Billing["/account/billing (v4.5)"]
   Home --> Pricing["/pricing"]
+  Home --> Notify["/notify — email capture + pre-launch pre-order CTA (Gate 0)"]
   Home --> Info["/how-we-rank · /how-trust-scores-work · /affiliate-disclosure · /privacy · /terms"]
   Home --> Docs["/docs/api (v4.5)"]
 ```
 
-Global header: logo (home), search (collapsed to icon on scroll on phones), account/sign-in. Global footer: disclosure link, info pages, legal pages.
+Global header (every route, DEC-038): logo (home), Pricing, Sign in, primary "Get notified" button → `/notify`; collapses to a menu sheet on phones (44 px targets). Global footer: disclosure link, info pages, legal pages. Search (collapsing to icon on scroll on phones) replaces the header's "Get notified" button once real search ships — until then, the hero on `/` carries the marked search-bar slot.
 
 ---
 
@@ -205,10 +206,10 @@ Max content width 1200 px. Cards use container queries so the same component wor
 
 ### 7.1 Home `/`
 
-- Headline: **"Before you buy, check if it's the right listing at the right price."** Sub: "We compare Amazon, eBay and Best Buy on delivered price, review signals and 90-day price history."
-- Search combobox (autocomplete after 2 chars, ≤ 8 suggestions with thumbnail, name, typical price). Placeholder: "Search a product, or paste an Amazon, eBay or Best Buy link".
-- ZIP chip: "Delivering to 10001 · Change" (from IP guess; editable).
-- Below the fold: three trust questions (reviews real? discount real? same unit under different names?), popular products (links to product pages), how we make money (disclosure summary).
+- Headline: **"Before you buy, check if it's the right listing at the right price."** Sub: "We compare Amazon, eBay and Best Buy on delivered price, review signals and 90-day price history." A short 3-step "how it works" line sits inside the hero, not as its own section.
+- Search combobox (autocomplete after 2 chars, ≤ 8 suggestions with thumbnail, name, typical price). Placeholder: "Search a product, or paste an Amazon, eBay or Best Buy link". **Gate 0 (DEC-038):** this is a marked, non-functional slot in the hero — real search ships later; until then the hero's CTAs point at `/pricing` and `/notify`.
+- ZIP chip: "Delivering to 10001 · Change" (from IP guess; editable). Not present at Gate 0.
+- Below the fold: three trust questions (reviews real? discount real? same unit under different names?) and the live 3-product demo (§7.14). Pricing, the waitlist form and the pre-order offer live on `/pricing` and `/notify`, not here.
 
 ### 7.2 Results `/search`
 
@@ -326,15 +327,17 @@ Same as results, with banner "First compared on {date}. Prices refreshed {relati
 
 ### 7.12 Pricing `/pricing` (live at v4.5; preview at Gate 0)
 
-Four columns (Free, Starter, Growth, Scale) + Enterprise row, values from `packages/config/plans.ts` (never hard-coded in the page). Emphasize "Every plan includes review authenticity and price history." FAQ: credits, cache hits, overage.
+Four plan cards (Free, Starter, Growth, Scale) + an Enterprise line below, values from `packages/config` (never hard-coded in the page). Equal-height cards in a CSS grid, feature rows aligned across cards, CTA pinned to the card's bottom (flex column + `mt-auto`); Starter is the highlighted/recommended card. Stacks to one column on phones, 2×2 on tablet, 4 across on desktop. Emphasize "Every plan includes review authenticity and price history." A short FAQ covers credits, cache hits and overage. **Gate 0 (DEC-038):** the pre-order offer card (§7.14) also lives here, labeled "Founding offer", since it is the one real purchase a visitor can make before launch.
 
 ### 7.13 Developer area (v4.5)
 
 `/account/api-keys`: list (name, prefix, scopes, last used, created), create dialog (name, scopes), show-once screen with copy + warning. `/account/usage`: credits by day (bar chart), cache vs live split, by key, quota bar. `/account/team`, `/account/billing`, `/docs/api`.
 
-### 7.14 Gate 0 landing (M0)
+### 7.14 Gate 0 site (M0)
 
-Hero (positioning claim), three questions, three demo comparisons (real result cards with "Sample captured on {date}"), email capture, pre-order card ($49 offer per DECIDE-15, "Fully refundable"), FAQ, legal footer.
+**DEC-038 split across three routes**, not one page: `/` carries the hero (positioning claim), the three trust questions and the three demo comparisons (real result cards with "Sample captured on {date}") — short CTAs to `/pricing` and `/notify` replace the old inline forms. `/pricing` carries the plan cards plus the pre-order card ($49 offer per DECIDE-15, "Fully refundable", labeled "Founding offer") and a short credits FAQ. `/notify` carries the waitlist email-capture form (double opt-in) with a "what you'll get" list, and reads `?q=<query>` to show "We'll tell you when you can check '{query}'" (DEC-039). A global header and footer (§3) wrap every route.
+
+**`/notify?q=` (DEC-039):** reaching `/notify` with a `q` parameter — e.g. from a future search box with no match — swaps the heading for the query-specific copy above and records the query against the signup with `source: 'search'`. Without `q`, the page shows the generic "get notified at launch" copy and `source` defaults as it did before (`direct`, or whatever `?source=`/referrer attribution already set).
 
 **Product image (M0.3):** one neutral illustration per demo product, shown once in a shared header above that product's three result cards — never per-card, and never a retailer listing photo (LEGAL-16). `next/image` with explicit `width`/`height` so the header doesn't shift layout on load. The result card itself carries no image. `demoComparisonSchema`'s `product.image` (`src`, `alt`, `source`, `license`) is optional so a comparison can still validate without one; `source`/`license` exist so a manufacturer press image can later replace the illustration with its provenance recorded, not just a bare URL.
 

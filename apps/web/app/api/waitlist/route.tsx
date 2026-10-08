@@ -64,6 +64,7 @@ export async function POST(req: Request) {
       consentTextVersion: CONSENT.version,
       ...(parsed.data.utm ? { utm: parsed.data.utm } : {}),
       ...(parsed.data.referrer ? { referrer: parsed.data.referrer } : {}),
+      ...(parsed.data.query ? { query: parsed.data.query } : {}),
     });
 
     if (!signup.alreadyConfirmed) {

@@ -1,10 +1,8 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { PLANS } from '@byb/config';
-import { formatCents } from '@byb/ui';
 
-/** M0.2 — Gate 0 landing page. Structure, not exact copy (see CLAUDE.md M0.2 brief). */
-test.describe('Gate 0 landing page', () => {
+/** DEC-038 — Gate 0 home page: hero, trust questions and the live demo only. */
+test.describe('Home page', () => {
   test('loads with a visible h1 carrying the positioning claim', async ({ page }) => {
     await page.goto('/');
     const h1 = page.getByRole('heading', { level: 1 });
@@ -22,29 +20,28 @@ test.describe('Gate 0 landing page', () => {
     await expect(trustQuestions.getByText(/same unit/i)).toBeVisible();
   });
 
-  test('renders a how-it-works section with three steps', async ({ page }) => {
-    await page.goto('/');
-    const howItWorks = page.locator('section', { has: page.getByRole('heading', { name: /how it works/i }) });
-    await expect(howItWorks.getByRole('listitem')).toHaveCount(3);
-  });
-
-  test('pricing preview matches packages/config plans', async ({ page }) => {
-    await page.goto('/');
-    const pricing = page.locator('#pricing');
-    await expect(pricing).toBeVisible();
-    for (const plan of PLANS) {
-      const card = pricing.locator(`[data-plan="${plan.id}"]`);
-      await expect(card.locator('[data-plan-name]')).toHaveText(plan.name);
-      const priceText = plan.priceCents === 0 ? 'Free' : `${formatCents(plan.priceCents)}/mo`;
-      await expect(card.locator('[data-plan-price]')).toHaveText(priceText);
-    }
-  });
-
-  test('leaves marked slots for the M0.3 demo, M0.4 email form and M0.5 pre-order card', async ({ page }) => {
+  test('leaves the marked slot for the M0.3 demo', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('[data-slot="demo-m0-3"]')).toHaveCount(1);
-    await expect(page.locator('[data-slot="email-capture-m0-4"]')).toHaveCount(1);
-    await expect(page.locator('[data-slot="preorder-m0-5"]')).toHaveCount(1);
+  });
+
+  test('CTAs link to /pricing and /notify instead of inline forms', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.getByRole('link', { name: 'See pricing' })).toHaveAttribute(
+      'href',
+      '/pricing',
+    );
+    await expect(page.getByRole('link', { name: 'Get notified' }).last()).toHaveAttribute(
+      'href',
+      '/notify',
+    );
+  });
+
+  test('global header and footer are present', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    await expect(page.locator('header').getByRole('link', { name: 'Pricing' })).toBeVisible();
+    await expect(page.locator('footer').getByRole('link', { name: 'Privacy' })).toBeVisible();
   });
 
   test('footer legal links resolve', async ({ page, request }) => {
@@ -68,6 +65,95 @@ test.describe('Gate 0 landing page', () => {
   test('axe reports no serious or critical violations at 1440px', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/');
+    const results = await new AxeBuilder({ page }).analyze();
+    const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
+    expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
+  });
+});
+
+/** DEC-038 — /pricing: plan cards from packages/config, pre-order offer, credits FAQ. */
+test.describe('Pricing page', () => {
+  test('loads with a visible h1', async ({ page }) => {
+    await page.goto('/pricing');
+    await expect(page.getByRole('heading', { level: 1, name: 'Plans' })).toBeVisible();
+  });
+
+  test('pricing cards match packages/config plans', async ({ page }) => {
+    const { PLANS } = await import('@byb/config');
+    const { formatCents } = await import('@byb/ui');
+    await page.goto('/pricing');
+    for (const plan of PLANS) {
+      const card = page.locator(`[data-plan="${plan.id}"]`);
+      await expect(card.locator('[data-plan-name]')).toHaveText(plan.name);
+      const priceText = plan.priceCents === 0 ? 'Free' : `${formatCents(plan.priceCents)}/mo`;
+      await expect(card.locator('[data-plan-price]')).toHaveText(priceText);
+    }
+  });
+
+  test('shows the Enterprise line and the founding pre-order offer', async ({ page }) => {
+    await page.goto('/pricing');
+    await expect(page.getByText('Enterprise', { exact: false })).toBeVisible();
+    await expect(page.getByText('Founding offer')).toBeVisible();
+  });
+
+  test('pricing card CTA buttons sit at the same top offset on desktop', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/pricing');
+    const cards = await page.locator('[data-plan]').all();
+    const boxes = await Promise.all(
+      cards.map(async (card) => {
+        const box = await card.getByRole('link', { name: 'Get started' }).boundingBox();
+        return box!.y;
+      }),
+    );
+    expect(boxes.length).toBeGreaterThan(0);
+    for (const y of boxes) {
+      expect(Math.abs(y - boxes[0]!)).toBeLessThanOrEqual(1);
+    }
+  });
+
+  test('axe reports no serious or critical violations at 375px', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto('/pricing');
+    const results = await new AxeBuilder({ page }).analyze();
+    const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
+    expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
+  });
+
+  test('axe reports no serious or critical violations at 1440px', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/pricing');
+    const results = await new AxeBuilder({ page }).analyze();
+    const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
+    expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
+  });
+});
+
+/** DEC-038/039 — /notify: waitlist form, "what you'll get", ?q= personalization. */
+test.describe('Notify page', () => {
+  test('loads with a visible h1', async ({ page }) => {
+    await page.goto('/notify');
+    await expect(page.getByRole('heading', { level: 1, name: 'Get notified at launch' })).toBeVisible();
+  });
+
+  test('?q= personalizes the heading', async ({ page }) => {
+    await page.goto('/notify?q=sony%20headphones');
+    await expect(
+      page.getByRole('heading', { level: 1, name: /sony headphones/i }),
+    ).toBeVisible();
+  });
+
+  test('axe reports no serious or critical violations at 375px', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto('/notify');
+    const results = await new AxeBuilder({ page }).analyze();
+    const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
+    expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
+  });
+
+  test('axe reports no serious or critical violations at 1440px', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/notify');
     const results = await new AxeBuilder({ page }).analyze();
     const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
     expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);

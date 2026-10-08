@@ -1,16 +1,13 @@
 import { demoComparisonSchema, type DemoComparison } from '@byb/schemas';
 import { DemoPicker } from './demo-picker';
-import { WaitlistForm } from './waitlist-form';
-import { PreorderCard } from './preorder-card';
 import sonyWh1000xm5 from '../../../content/demo/sony-wh-1000xm5.json';
 import robotVacuum from '../../../content/demo/robot-vacuum.json';
 import ipadBase from '../../../content/demo/ipad-base.json';
 
 /**
- * Placeholder sections for later M0 tasks: the M0.4 email form and M0.5
- * pre-order card. Each is a marked slot only — no functionality yet.
- * `data-slot` lets tests assert the slot exists without coupling to copy that
- * will change when the real component lands.
+ * The M0.3 demo falls back to this pending message when none of the hand-filled
+ * JSON files validate yet. `data-slot` lets tests assert the slot exists without
+ * coupling to copy that will change once it does.
  */
 function SlotSection({
   slot,
@@ -66,43 +63,6 @@ export function DemoSlot() {
       </h2>
       <div className="mt-6">
         <DemoPicker comparisons={comparisons} />
-      </div>
-    </section>
-  );
-}
-
-export function EmailCaptureSlot() {
-  return (
-    <section
-      data-slot="email-capture-m0-4"
-      aria-labelledby="waitlist-heading"
-      className="mx-auto max-w-5xl px-4 py-12"
-    >
-      <h2 id="waitlist-heading" className="text-2xl font-semibold tracking-tight">
-        Get notified at launch
-      </h2>
-      <p className="mt-4 text-sm text-muted-foreground">
-        Leave your email and we&apos;ll let you know the moment Before You Buy opens up.
-      </p>
-      <div className="mt-6">
-        <WaitlistForm />
-      </div>
-    </section>
-  );
-}
-
-export function PreorderSlot() {
-  return (
-    <section
-      data-slot="preorder-m0-5"
-      aria-labelledby="preorder-heading"
-      className="mx-auto max-w-5xl px-4 py-12"
-    >
-      <h2 id="preorder-heading" className="text-2xl font-semibold tracking-tight">
-        Reserve launch pricing
-      </h2>
-      <div className="mt-6">
-        <PreorderCard />
       </div>
     </section>
   );

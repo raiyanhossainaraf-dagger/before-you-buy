@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Version | 1.0 |
+| Version | 1.1 |
 | Database | PostgreSQL 18 on Neon · Drizzle ORM · extensions `vector`, `pg_trgm`, `citext` |
 | Cache/queues | Redis 7 · BullMQ |
 | Related | [02-ARCHITECTURE §10](02-ARCHITECTURE.md#10-data-architecture-summary) · [03-TECHNICAL-REQUIREMENTS](03-TECHNICAL-REQUIREMENTS.md) · [05-SECURITY](05-SECURITY.md) |
@@ -682,9 +682,10 @@ CREATE INDEX tax_rates_state ON tax_rates (state);
 CREATE TABLE waitlist_signups (
   id                    uuid PRIMARY KEY DEFAULT uuidv7(),
   email                 citext NOT NULL UNIQUE,
-  source                text,                 -- 'show_hn' | 'reddit' | 'dm' | 'direct' ...
+  source                text,                 -- 'show_hn' | 'reddit' | 'dm' | 'direct' | 'search' | 'other'
   utm                   jsonb,
   referrer              text,
+  query                 text,                 -- DEC-039: the /notify?q= search term, when source = 'search'
   consent_text_version  text NOT NULL,
   confirmed_at          timestamptz,
   created_at            timestamptz NOT NULL DEFAULT now()
